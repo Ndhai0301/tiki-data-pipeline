@@ -13,6 +13,7 @@ Chay:
     python3 tiki_crawl.py --categories laptop --pages 1 --verbose
     python3 tiki_crawl.py --categories laptop,dien-thoai --pages 10 --rps 1.0
     python3 tiki_crawl.py --categories laptop --pages 5 --detail --detail-limit 100
+    python3 tiki_crawl.py --categories all --pages 20 --rps 1.0
 """
 
 from __future__ import annotations
@@ -55,6 +56,30 @@ CATEGORY_ALIASES: dict[str, int] = {
     "tai-nghe": 8215,
     "sach-tieng-viet": 316,
     "do-choi": 2549,
+    # 26 category cap 1 tren menu chinh cua tiki.vn (do ngay 2026-08-21)
+    "thoi-trang-nam": 915,
+    "thoi-trang-nu": 931,
+    "tui-vi-nu": 976,
+    "lam-dep-suc-khoe": 1520,
+    "giay-dep-nam": 1686,
+    "giay-dep-nu": 1703,
+    "may-anh": 1801,
+    "thiet-bi-kts-phu-kien-so": 1815,
+    "dien-gia-dung": 1882,
+    "nha-cua-doi-song": 1883,
+    "the-thao-da-ngoai": 1975,
+    "dien-tu-dien-lanh": 4221,
+    "bach-hoa-online": 4384,
+    "balo-va-vali": 6000,
+    "nha-sach-tiki": 8322,
+    "dong-ho-va-trang-suc": 8371,
+    "o-to-xe-may-xe-dap": 8594,
+    "voucher-dich-vu": 11312,
+    "cham-soc-nha-cua": 15078,
+    "cross-border-hang-quoc-te": 17166,
+    "phu-kien-thoi-trang": 27498,
+    "tui-thoi-trang-nam": 27616,
+    "ngon": 44792,
 }
 
 UA_CHROME = (
@@ -306,7 +331,12 @@ def resolve_category(token: str) -> tuple[str, int]:
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Crawl san pham Tiki -> Bronze/Silver")
-    p.add_argument("--categories", default="laptop", help="Alias hoac category_id, cach nhau dau phay")
+    p.add_argument(
+        "--categories",
+        default="laptop",
+        help="Alias hoac category_id, cach nhau dau phay. Dung 'all' de crawl toan bo "
+        "category trong CATEGORY_ALIASES (" + str(len(CATEGORY_ALIASES)) + " category).",
+    )
     p.add_argument("--pages", type=int, default=3, help="So trang moi category (40 sp/trang)")
     p.add_argument("--rps", type=float, default=1.0, help="Request toi da moi giay")
     p.add_argument("--out", default="./data", help="Thu muc output")
@@ -338,7 +368,8 @@ def main(argv: list[str] | None = None) -> int:
     crawled_at = now.isoformat(timespec="seconds")
     total = 0
 
-    for token in args.categories.split(","):
+    tokens = list(CATEGORY_ALIASES) if args.categories.strip().lower() == "all" else args.categories.split(",")
+    for token in tokens:
         name, cat_id = resolve_category(token)
         LOG.info("=== Category %s (id=%d) ===", name, cat_id)
 
