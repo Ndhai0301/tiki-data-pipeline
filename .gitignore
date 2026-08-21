@@ -1,0 +1,7 @@
+data/
+*.parquet
+*.jsonl.gz
+.venv/
+__pycache__/
+*.curl
+cron.log

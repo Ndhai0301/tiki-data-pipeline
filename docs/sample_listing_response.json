@@ -1,0 +1,1065 @@
+{
+  "block": {
+    "code": "tiki_listing",
+    "title": "Tiki Listing",
+    "icon": ""
+  },
+  "data": [
+    {
+      "id": 279225805,
+      "sku": "5517358684027",
+      "name": "Apple Macbook Air 13 Inch M5 (10CPU - 8GPU - 16GB/ 512GB)",
+      "url_key": "apple-macbook-air-13-inch-m5-10cpu-8gpu-16gb-512gb-hang-chinh-hang-p279225805",
+      "url_path": "apple-macbook-air-13-inch-m5-10cpu-8gpu-16gb-512gb-hang-chinh-hang-p279225805.html?spid=279225807",
+      "type": "",
+      "author_name": "",
+      "book_cover": null,
+      "brand_name": "Apple",
+      "short_description": "",
+      "price": 34990000,
+      "list_price": 0,
+      "badges": [],
+      "badges_new": [
+        {
+          "code": "authentic_brand",
+          "icon": "https://salt.tikicdn.com/ts/tka/69/cf/22/1be823299ae34c7ddcd922e73abd4909.png",
+          "icon_height": 20,
+          "icon_width": 89,
+          "placement": "under_product_image",
+          "type": "icon_badge"
+        },
+        {
+          "code": "installment",
+          "placement": "under_rating",
+          "text": "Trả góp",
+          "type": "under_rating_text"
+        },
+        {
+          "code": "option_color",
+          "placement": "under_rating",
+          "text": "Nhiều màu",
+          "type": "under_rating_text"
+        },
+        {
+          "code": "brand_name",
+          "placement": "above_product_name",
+          "text": "APPLE",
+          "text_color": "#808089",
+          "type": "text_above_product_name"
+        },
+        {
+          "code": "delivery_info_badge",
+          "placement": "delivery_info",
+          "text": "Giao thứ 5, 27/08",
+          "type": "delivery_info_badge"
+        },
+        {
+          "arr_text": [
+            {
+              "value": "4 Màu sắc"
+            }
+          ],
+          "code": "variant_count",
+          "placement": "under_rating_v2",
+          "text_color": "#808089",
+          "type": "text_box"
+        }
+      ],
+      "discount": 4910000,
+      "discount_rate": 12,
+      "rating_average": 5,
+      "review_count": 1,
+      "order_count": 0,
+      "favourite_count": 0,
+      "thumbnail_url": "https://salt.tikicdn.com/cache/280x280/ts/product/70/29/ba/339e972d94f63f3ab578df895c51acbc.png",
+      "thumbnail_width": 280,
+      "thumbnail_height": 280,
+      "freegift_items": [],
+      "has_ebook": false,
+      "inventory_status": "",
+      "is_visible": false,
+      "productset_id": 2493,
+      "productset_group_name": "",
+      "seller": null,
+      "is_flower": false,
+      "is_gift_card": false,
+      "inventory": null,
+      "url_attendant_input_form": "",
+      "option_color": [],
+      "stock_item": null,
+      "salable_type": "",
+      "seller_product_id": 279225807,
+      "installment_info": null,
+      "url_review": "",
+      "bundle_deal": false,
+      "quantity_sold": {
+        "text": "Đã bán 10",
+        "value": 10
+      },
+      "tiki_live": null,
+      "original_price": 39900000,
+      "shippable": true,
+      "impression_info": [
+        {
+          "impression_id": "thanos-sVF0jPgjVDaTlGVj-7yDl4oky",
+          "metadata": {
+            "astra_reward": 0,
+            "category": 1846,
+            "delivery_date": "2026/08/27",
+            "delivery_info_badge_text": "Giao thứ 5, 27/08",
+            "delivery_zone": "VN039006001",
+            "discount_rate": 12,
+            "flags": {},
+            "is_ad": 0,
+            "is_astra_plus": 0,
+            "is_official_store": 0,
+            "is_tikinow": 0,
+            "is_tikipro": 0,
+            "is_trusted_store": 0,
+            "mpid": 279225805,
+            "params": {
+              "_v": "filter_revamp",
+              "aggregations": "2",
+              "category": "1846",
+              "include": "advertisement",
+              "limit": "2",
+              "page": "1"
+            },
+            "position": 1,
+            "price": 34990000,
+            "quantity_sold": 10,
+            "rating": 5,
+            "request_id": "sVF0jPgjVDaTlGVj",
+            "spid": 279225807,
+            "tiki_verified": 0
+          },
+          "checksum": ""
+        }
+      ],
+      "advertisement": null,
+      "availability": 1,
+      "primary_category_path": "1/2/1846/8095/2458",
+      "product_reco_score": 0,
+      "seller_id": 1,
+      "visible_impression_info": {
+        "amplitude": {
+          "all_time_quantity_sold": 10,
+          "brand_name": "Apple",
+          "category_l1_name": "Laptop - Máy Vi Tính - Linh kiện",
+          "category_l2_name": "Laptop",
+          "deboosted_high_price_diff_position": 0,
+          "earliest_delivery_estimate": 0,
+          "is_authentic": 1,
+          "is_best_offer_available": false,
+          "is_flash_deal": false,
+          "is_freeship_xtra": false,
+          "is_gift_available": false,
+          "is_hero": false,
+          "is_high_price_penalty": false,
+          "is_imported": false,
+          "is_top_brand": true,
+          "joined_strategy_rerank": false,
+          "layout": "grid_view",
+          "master_product_sku": "4570219518056",
+          "number_of_reviews": 1,
+          "order_route": "same_province",
+          "origin": "Trung Quốc",
+          "partner_rewards_amount": 0,
+          "price": 34990000,
+          "primary_category_name": "Macbook",
+          "product_rating": 5,
+          "search_rank": 0,
+          "seller_id": 1,
+          "seller_product_id": 279225807,
+          "seller_product_sku": "5517358684027",
+          "seller_type": "OFFICIAL_STORE",
+          "standard_delivery_estimate": 7.089,
+          "tiki_verified": 0,
+          "tikinow_delivery_estimate": 0,
+          "tikipro_delivery_estimate": 0,
+          "variant": true
+        }
+      },
+      "badges_v3": [
+        {
+          "code": "product_image_badge",
+          "image": "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+          "placement": "badge_overlay_product_image",
+          "type": "image_badge"
+        }
+      ]
+    },
+    {
+      "id": 278794903,
+      "sku": "9458864915759",
+      "name": "Màn hình Gaming Xiaomi G24i 2026 ELA6364EU - 24 inch FHD/ IPS/ 200Hz/ GTG 1ms - Hàng Chính Hãng",
+      "url_key": "man-hinh-gaming-xiaomi-g24i-24-inch-fhd-ips-180hz-gtg-1ms-hang-chinh-hang-p278794903",
+      "url_path": "man-hinh-gaming-xiaomi-g24i-24-inch-fhd-ips-180hz-gtg-1ms-hang-chinh-hang-p278794903.html?spid=278794904",
+      "type": "",
+      "author_name": "",
+      "book_cover": null,
+      "brand_name": "Xiaomi",
+      "short_description": "",
+      "price": 2600000,
+      "list_price": 0,
+      "badges": [],
+      "badges_new": [
+        {
+          "code": "tikinow",
+          "icon": "https://salt.tikicdn.com/ts/tka/a8/31/b6/802e2c99dcce64c67aa2648edb15dd25.png",
+          "icon_height": 16,
+          "icon_width": 32,
+          "placement": "delivery_info",
+          "text": "Giao siêu tốc 2h",
+          "type": "delivery_info_badge"
+        },
+        {
+          "code": "authentic_brand",
+          "icon": "https://salt.tikicdn.com/ts/tka/69/cf/22/1be823299ae34c7ddcd922e73abd4909.png",
+          "icon_height": 20,
+          "icon_width": 89,
+          "placement": "under_product_image",
+          "type": "icon_badge"
+        },
+        {
+          "code": "brand_name",
+          "placement": "above_product_name",
+          "text": "XIAOMI",
+          "text_color": "#808089",
+          "type": "text_above_product_name"
+        }
+      ],
+      "discount": 590000,
+      "discount_rate": 18,
+      "rating_average": 5,
+      "review_count": 2,
+      "order_count": 0,
+      "favourite_count": 0,
+      "thumbnail_url": "https://salt.tikicdn.com/cache/280x280/ts/product/ff/cb/1f/1bfd6a455b0aeff22140c2fe89b29f97.jpg",
+      "thumbnail_width": 280,
+      "thumbnail_height": 280,
+      "freegift_items": [],
+      "has_ebook": false,
+      "inventory_status": "",
+      "is_visible": false,
+      "productset_id": 2565,
+      "productset_group_name": "",
+      "seller": null,
+      "is_flower": false,
+      "is_gift_card": false,
+      "inventory": null,
+      "url_attendant_input_form": "",
+      "option_color": [],
+      "stock_item": null,
+      "salable_type": "",
+      "seller_product_id": 278794904,
+      "installment_info": null,
+      "url_review": "",
+      "bundle_deal": false,
+      "quantity_sold": {
+        "text": "Đã bán 11",
+        "value": 11
+      },
+      "tiki_live": null,
+      "original_price": 3190000,
+      "shippable": true,
+      "impression_info": [
+        {
+          "impression_id": "thanos-sVF0jPgjVDaTlGVj-SCNNkUit",
+          "metadata": {
+            "astra_reward": 0,
+            "category": 1846,
+            "delivery_zone": "VN039006001",
+            "discount_rate": 18,
+            "flags": {},
+            "is_ad": 0,
+            "is_astra_plus": 0,
+            "is_official_store": 0,
+            "is_tikinow": 1,
+            "is_tikipro": 0,
+            "is_trusted_store": 0,
+            "mpid": 278794903,
+            "params": {
+              "_v": "filter_revamp",
+              "aggregations": "2",
+              "category": "1846",
+              "include": "advertisement",
+              "limit": "2",
+              "page": "1"
+            },
+            "position": 2,
+            "price": 2600000,
+            "quantity_sold": 11,
+            "rating": 5,
+            "request_id": "sVF0jPgjVDaTlGVj",
+            "spid": 278794904,
+            "tiki_verified": 0
+          },
+          "checksum": ""
+        }
+      ],
+      "advertisement": null,
+      "availability": 1,
+      "primary_category_path": "1/2/1846/12884/2665/12672",
+      "product_reco_score": 0,
+      "seller_id": 1,
+      "visible_impression_info": {
+        "amplitude": {
+          "all_time_quantity_sold": 11,
+          "brand_name": "Xiaomi",
+          "category_l1_name": "Laptop - Máy Vi Tính - Linh kiện",
+          "category_l2_name": "Thiết Bị Văn Phòng - Thiết Bị Ngoại Vi",
+          "category_l3_name": "Màn Hình Máy Tính",
+          "deboosted_high_price_diff_position": 0,
+          "earliest_delivery_estimate": 0,
+          "is_authentic": 1,
+          "is_best_offer_available": false,
+          "is_flash_deal": false,
+          "is_freeship_xtra": false,
+          "is_gift_available": false,
+          "is_hero": false,
+          "is_high_price_penalty": false,
+          "is_imported": false,
+          "is_top_brand": false,
+          "joined_strategy_rerank": false,
+          "layout": "grid_view",
+          "master_product_sku": "5713887675455",
+          "number_of_reviews": 2,
+          "order_route": "same_province",
+          "origin": "Trung Quốc",
+          "partner_rewards_amount": 0,
+          "price": 2600000,
+          "primary_category_name": "Màn Hình Gaming",
+          "product_rating": 5,
+          "search_rank": 0,
+          "seller_id": 1,
+          "seller_product_id": 278794904,
+          "seller_product_sku": "9458864915759",
+          "seller_type": "OFFICIAL_STORE",
+          "standard_delivery_estimate": 0,
+          "tiki_verified": 0,
+          "tikinow_delivery_estimate": 0.21,
+          "tikipro_delivery_estimate": 0,
+          "variant": false
+        }
+      },
+      "badges_v3": [
+        {
+          "code": "product_image_badge",
+          "image": "https://salt.tikicdn.com/ts/upload/c2/bc/6d/ff18cc8968e2bbb43f7ac58efbfafdff.png",
+          "placement": "badge_overlay_product_image",
+          "type": "image_badge"
+        }
+      ]
+    }
+  ],
+  "paging": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1000,
+    "per_page": 2,
+    "to": 2,
+    "total": 2000
+  },
+  "filters": [
+    {
+      "code": "category",
+      "collapsed": 6,
+      "display_name": "Danh Mục Sản Phẩm",
+      "multi_select": false,
+      "query_name": "category",
+      "values": [
+        {
+          "count": 12,
+          "display_value": "Laptop",
+          "query_value": 8095,
+          "url_key": "laptop",
+          "url_path": "/laptop/c8095"
+        },
+        {
+          "count": 3212,
+          "display_value": "Thiết Bị Văn Phòng - Thiết Bị Ngoại Vi",
+          "query_value": 12884,
+          "url_key": "thiet-bi-van-phong-thiet-bi-ngoai-vi",
+          "url_path": "/thiet-bi-van-phong-thiet-bi-ngoai-vi/c12884"
+        },
+        {
+          "count": 327,
+          "display_value": "Thiết Bị Lưu Trữ",
+          "query_value": 8060,
+          "url_key": "thiet-bi-luu-tru",
+          "url_path": "/thiet-bi-luu-tru/c8060"
+        },
+        {
+          "count": 1353,
+          "display_value": "Thiết Bị Mạng",
+          "query_value": 2663,
+          "url_key": "thiet-bi-mang",
+          "url_path": "/thiet-bi-mang/c2663"
+        },
+        {
+          "count": 44,
+          "display_value": "PC - Máy Tính Bộ",
+          "query_value": 8093,
+          "url_key": "pc-may-tinh-bo",
+          "url_path": "/pc-may-tinh-bo/c8093"
+        },
+        {
+          "count": 12471,
+          "display_value": "Linh Kiện Máy Tính - Phụ Kiện Máy Tính",
+          "query_value": 8129,
+          "url_key": "linh-kien-may-tinh-phu-kien-may-tinh",
+          "url_path": "/linh-kien-may-tinh-phu-kien-may-tinh/c8129"
+        }
+      ]
+    },
+    {
+      "code": "support_p2h_delivery",
+      "collapsed": 5,
+      "display_name": "Giao siêu tốc 2H",
+      "icon": "https://salt.tikicdn.com/ts/tka/a8/31/b6/802e2c99dcce64c67aa2648edb15dd25.png",
+      "icon_height": 17,
+      "icon_width": 40,
+      "multi_select": false,
+      "query_name": "support_p2h_delivery",
+      "service_name": "Dịch vụ",
+      "sticky": true,
+      "type": "service",
+      "values": [
+        {
+          "count": 451,
+          "display_value": "Có",
+          "query_value": "1"
+        }
+      ]
+    },
+    {
+      "code": "tiki_hero",
+      "collapsed": 5,
+      "display_name": "Siêu rẻ",
+      "icon": "https://salt.tikicdn.com/ts/upload/b5/aa/48/2305c5e08e536cfb840043df12818146.png",
+      "icon_height": 16,
+      "icon_width": 79,
+      "multi_select": false,
+      "query_name": "tiki_hero",
+      "service_name": "Ưu đãi",
+      "sticky": true,
+      "type": "service",
+      "values": [
+        {
+          "count": 70,
+          "display_value": "Có",
+          "query_value": "1"
+        }
+      ]
+    },
+    {
+      "code": "freeship_campaign",
+      "collapsed": 5,
+      "display_name": "",
+      "icon": "https://salt.tikicdn.com/ts/upload/2f/20/77/0f96cfafdf7855d5e7fe076dd4f34ce0.png",
+      "icon_height": 16,
+      "icon_width": 79,
+      "multi_select": false,
+      "query_name": "freeship_campaign",
+      "service_name": "Ưu đãi",
+      "sticky": true,
+      "type": "service",
+      "values": [
+        {
+          "count": 18806,
+          "display_value": "freeship_xtra",
+          "query_value": "freeship_xtra"
+        }
+      ]
+    },
+    {
+      "code": "support_installment",
+      "collapsed": 5,
+      "display_name": "Trả góp 0%",
+      "multi_select": false,
+      "query_name": "support_installment",
+      "service_name": "Dịch vụ",
+      "type": "service",
+      "values": [
+        {
+          "count": 84,
+          "display_value": "Có",
+          "query_value": "1"
+        }
+      ]
+    },
+    {
+      "code": "rating",
+      "collapsed": 5,
+      "display_name": "Đánh giá",
+      "multi_select": false,
+      "query_name": "rating",
+      "values": [
+        {
+          "display_value": "từ 5 sao",
+          "query_value": "5"
+        },
+        {
+          "display_value": "từ 4 sao",
+          "query_value": "4"
+        },
+        {
+          "display_value": "từ 3 sao",
+          "query_value": "3"
+        }
+      ]
+    },
+    {
+      "code": "price",
+      "collapsed": 5,
+      "display_name": "Giá",
+      "max": 10000000000,
+      "min": 0,
+      "multi_select": false,
+      "query_name": "price",
+      "values": [
+        {
+          "count": 15287,
+          "display_value": "Dưới 600.000",
+          "query_value": "0,600000"
+        },
+        {
+          "count": 15287,
+          "display_value": "600.000 -> 2.600.000",
+          "query_value": "600000,2600000"
+        },
+        {
+          "count": 15287,
+          "display_value": "Trên 2.600.000",
+          "query_value": "2600000,10000000000"
+        }
+      ]
+    },
+    {
+      "code": "brand",
+      "collapsed": 5,
+      "display_name": "Thương hiệu",
+      "multi_select": true,
+      "query_name": "brand",
+      "values": [
+        {
+          "count": 5397,
+          "display_value": "MISUFUJl",
+          "query_value": "7834739",
+          "url_key": "thuong-hieu/misufujl.html"
+        },
+        {
+          "count": 4902,
+          "display_value": "TEEMO PC",
+          "query_value": "8217634",
+          "url_key": "thuong-hieu/teemo-pc.html"
+        },
+        {
+          "count": 1146,
+          "display_value": "MINHHA",
+          "query_value": "8198797",
+          "url_key": "thuong-hieu/minhha.html"
+        },
+        {
+          "count": 431,
+          "display_value": "Puty",
+          "query_value": "229127",
+          "url_key": "thuong-hieu/puty.html"
+        },
+        {
+          "count": 410,
+          "display_value": "UGREEN",
+          "query_value": "243693",
+          "url_key": "thuong-hieu/ugreen.html"
+        },
+        {
+          "count": 331,
+          "display_value": "HA",
+          "query_value": "608855",
+          "url_key": "thuong-hieu/ha.html"
+        },
+        {
+          "count": 251,
+          "display_value": "T-WOLF",
+          "query_value": "576515",
+          "url_key": "thuong-hieu/t-wolf.html"
+        },
+        {
+          "count": 233,
+          "display_value": "TP-Link",
+          "query_value": "27464",
+          "url_key": "thuong-hieu/tp-link.html"
+        },
+        {
+          "count": 179,
+          "display_value": "Thuận Phong",
+          "query_value": "166913",
+          "url_key": "thuong-hieu/thuan-phong.html"
+        },
+        {
+          "count": 149,
+          "display_value": "Tenda",
+          "query_value": "27703",
+          "url_key": "thuong-hieu/tenda.html"
+        },
+        {
+          "count": 146,
+          "display_value": "RONALD JACK",
+          "query_value": "178025",
+          "url_key": "thuong-hieu/ronald-jack.html"
+        },
+        {
+          "count": 126,
+          "display_value": "OPTICON",
+          "query_value": "236011",
+          "url_key": "thuong-hieu/opticon.html"
+        },
+        {
+          "count": 122,
+          "display_value": "HI PC",
+          "query_value": "4968143",
+          "url_key": "thuong-hieu/hi-pc.html"
+        },
+        {
+          "count": 101,
+          "display_value": "Alpha Cartridge",
+          "query_value": "254889",
+          "url_key": "thuong-hieu/alpha-cartridge.html"
+        },
+        {
+          "count": 98,
+          "display_value": "HP",
+          "query_value": "17825",
+          "url_key": "thuong-hieu/hp.html"
+        },
+        {
+          "count": 84,
+          "display_value": "AZ Mực in",
+          "query_value": "8242420",
+          "url_key": "thuong-hieu/az-muc-in.html"
+        },
+        {
+          "count": 78,
+          "display_value": "Viewsonic",
+          "query_value": "111984",
+          "url_key": "thuong-hieu/viewsonic.html"
+        },
+        {
+          "count": 69,
+          "display_value": "MSI",
+          "query_value": "49067",
+          "url_key": "thuong-hieu/msi.html"
+        },
+        {
+          "count": 68,
+          "display_value": "Gigabyte",
+          "query_value": "19903",
+          "url_key": "thuong-hieu/gigabyte.html"
+        },
+        {
+          "count": 65,
+          "display_value": "Mean Well",
+          "query_value": "4205243",
+          "url_key": "thuong-hieu/mean-well.html"
+        },
+        {
+          "count": 61,
+          "display_value": "BIASDO",
+          "query_value": "5177339",
+          "url_key": "thuong-hieu/biasdo.html"
+        },
+        {
+          "count": 59,
+          "display_value": "Asus",
+          "query_value": "17826",
+          "url_key": "thuong-hieu/asus.html"
+        },
+        {
+          "count": 56,
+          "display_value": "Mercusys",
+          "query_value": "112149",
+          "url_key": "thuong-hieu/mercusys.html"
+        },
+        {
+          "count": 56,
+          "display_value": "Xprinter",
+          "query_value": "178001",
+          "url_key": "thuong-hieu/xprinter.html"
+        },
+        {
+          "count": 49,
+          "display_value": "ACO",
+          "query_value": "174249",
+          "url_key": "thuong-hieu/aco.html"
+        },
+        {
+          "count": 48,
+          "display_value": "Orico",
+          "query_value": "110682",
+          "url_key": "thuong-hieu/orico.html"
+        },
+        {
+          "count": 47,
+          "display_value": "Intel",
+          "query_value": "40960",
+          "url_key": "thuong-hieu/intel.html"
+        },
+        {
+          "count": 47,
+          "display_value": "QNAP",
+          "query_value": "1640129",
+          "url_key": "thuong-hieu/qnap.html"
+        },
+        {
+          "count": 45,
+          "display_value": "Brother",
+          "query_value": "20972",
+          "url_key": "thuong-hieu/brother.html"
+        },
+        {
+          "count": 44,
+          "display_value": "ROGTZ",
+          "query_value": "448601",
+          "url_key": "thuong-hieu/rogtz.html"
+        }
+      ]
+    },
+    {
+      "code": "option_color",
+      "collapsed": 5,
+      "display_name": "Màu sắc",
+      "multi_select": true,
+      "query_name": "option_color",
+      "values": [
+        {
+          "count": 7898,
+          "display_value": "Đen",
+          "query_value": "Đen"
+        },
+        {
+          "count": 2691,
+          "display_value": "Xám",
+          "query_value": "Xám"
+        },
+        {
+          "count": 2442,
+          "display_value": "Bạc",
+          "query_value": "Bạc"
+        },
+        {
+          "count": 1783,
+          "display_value": "Xanh dương",
+          "query_value": "Xanh dương"
+        },
+        {
+          "count": 659,
+          "display_value": "Vàng",
+          "query_value": "Vàng"
+        },
+        {
+          "count": 637,
+          "display_value": "Trắng",
+          "query_value": "Trắng"
+        },
+        {
+          "count": 443,
+          "display_value": "Xanh lá",
+          "query_value": "Xanh lá"
+        },
+        {
+          "count": 350,
+          "display_value": "Đỏ",
+          "query_value": "Đỏ"
+        },
+        {
+          "count": 329,
+          "display_value": "Cam",
+          "query_value": "Cam"
+        },
+        {
+          "count": 316,
+          "display_value": "Hồng",
+          "query_value": "Hồng"
+        },
+        {
+          "count": 303,
+          "display_value": "Kem",
+          "query_value": "Kem"
+        },
+        {
+          "count": 178,
+          "display_value": "Nâu",
+          "query_value": "Nâu"
+        },
+        {
+          "count": 147,
+          "display_value": "Tím",
+          "query_value": "Tím"
+        }
+      ]
+    },
+    {
+      "code": "seller",
+      "collapsed": 5,
+      "display_name": "Nhà cung cấp",
+      "multi_select": true,
+      "query_name": "seller",
+      "values": [
+        {
+          "count": 5373,
+          "display_value": "Điện Tử HI-END",
+          "logo": "https://salt.tikicdn.com/ts/seller/e1/3f/73/df1c0089ceabc1ba71ecef158e3b8f82.jpg",
+          "query_value": 308064,
+          "seller_address": ""
+        },
+        {
+          "count": 4902,
+          "display_value": "TEEMO PC OFFICIAL STORE",
+          "logo": "https://salt.tikicdn.com/ts/seller/a5/d5/81/a31a84f58ebbacbb25e356e7289da11c.jpg",
+          "query_value": 287052,
+          "seller_address": ""
+        },
+        {
+          "count": 1242,
+          "display_value": "Laptop Minh Hà",
+          "logo": "https://salt.tikicdn.com/ts/seller/2c/4d/98/81092acd0fa710b3c2f6f15bfd2aaa6e.jpg",
+          "query_value": 126154,
+          "seller_address": ""
+        },
+        {
+          "count": 1033,
+          "display_value": "AN PHAT COMPUTER",
+          "logo": "https://salt.tikicdn.com/ts/seller/6e/96/79/ce7c62995c8844602cff5100e7e988f4.png",
+          "query_value": 30787,
+          "seller_address": "69 Trương Định, P. An Cư, Q. Ninh Kiều, TP. Cần Thơ, Phường An Cư, Quận Ninh Kiều, Cần Thơ"
+        },
+        {
+          "count": 492,
+          "display_value": "Công ty thiết bị máy văn phòng Hà Anh",
+          "logo": "https://salt.tikicdn.com/ts/seller/4b/54/1a/f385a79a716cb3505f152e7af8c769aa.png",
+          "query_value": 2671,
+          "seller_address": "Số 170 Nguyễn An Ninh, Phường Đồng Tâm, Quận Hai Bà Trưng, Hà Nội"
+        },
+        {
+          "count": 367,
+          "display_value": "ugreenonline",
+          "logo": "https://salt.tikicdn.com/ts/seller/47/25/d5/b410d86b2a8804c7ffd79472d25a2d64.png",
+          "query_value": 14813,
+          "seller_address": "81 bùi thị xuân, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh"
+        },
+        {
+          "count": 322,
+          "display_value": "Mực in AZ",
+          "logo": "https://salt.tikicdn.com/ts/seller/ad/88/dd/b3f8ccd1f4f1a3dbb81a2b6cdb967642.jpg",
+          "query_value": 43974,
+          "seller_address": ""
+        },
+        {
+          "count": 309,
+          "display_value": "Tin Học Hoàng Kim",
+          "logo": "https://salt.tikicdn.com/ts/seller/bf/ce/4e/e995a297d24c3207a2856b64bee2ce22.jpg",
+          "query_value": 26446,
+          "seller_address": ""
+        },
+        {
+          "count": 291,
+          "display_value": "Vi Tính Lê Huy",
+          "logo": "https://salt.tikicdn.com/ts/seller/16/3b/e4/2c60fb1ab02db0ac54a1be0c4a2eacbe.jpg",
+          "query_value": 12395,
+          "seller_address": "48 Chấn Hưng, Phường 06, Quận Tân Bình, Hồ Chí Minh"
+        },
+        {
+          "count": 276,
+          "display_value": "Mực in Thuận Phong",
+          "logo": "https://salt.tikicdn.com/ts/seller/52/e9/4c/a4a2ed38f96273aa6adb44d52c0aba3c.jpg",
+          "query_value": 2430,
+          "seller_address": ""
+        },
+        {
+          "count": 274,
+          "display_value": "Nova Computer",
+          "logo": "https://salt.tikicdn.com/ts/seller/12/55/4c/325a571c8bb059904a3bae1811284012.jpg",
+          "query_value": 915,
+          "seller_address": "16-18 Tôn thất tùng, Phường Bến Thành, Quận 1, Hồ Chí Minh"
+        },
+        {
+          "count": 243,
+          "display_value": "Techoffice Việt Nam",
+          "logo": "https://salt.tikicdn.com/ts/seller/4b/54/1a/f385a79a716cb3505f152e7af8c769aa.png",
+          "query_value": 33316,
+          "seller_address": "C11 TT DAI HOC XAY DUNG,( ngõ 194 dduong giai phong) PHUONG LIET WARD, THANH XUAN DIST, Phường Phương Liệt, Quận Thanh Xuân, Hà Nội"
+        },
+        {
+          "count": 237,
+          "display_value": "Trần Nguyễn Technology",
+          "logo": "https://salt.tikicdn.com/ts/seller/4b/54/1a/f385a79a716cb3505f152e7af8c769aa.png",
+          "query_value": 342578,
+          "seller_address": ""
+        },
+        {
+          "count": 232,
+          "display_value": "Nhãn In Trần Nguyễn",
+          "logo": "https://salt.tikicdn.com/ts/seller/72/37/54/bc1333fba3df9c191aacb1a0613607ec.jpg",
+          "query_value": 269675,
+          "seller_address": ""
+        },
+        {
+          "count": 177,
+          "display_value": "StorageShop",
+          "logo": "https://salt.tikicdn.com/ts/seller/49/61/11/b40862115200837ad93a930c9d2fad1b.jpeg",
+          "query_value": 128476,
+          "seller_address": "31/6+6A Trần Đình Xu, Phường Cầu Kho, Quận 1, Hồ Chí Minh"
+        },
+        {
+          "count": 148,
+          "display_value": "ZAMACO AUDIO",
+          "logo": "https://salt.tikicdn.com/ts/seller/a8/f5/76/7560c8ad929b99e7e4f3477133b143f2.jpg",
+          "query_value": 19766,
+          "seller_address": ""
+        },
+        {
+          "count": 146,
+          "display_value": "Tiki Trading",
+          "logo": "https://salt.tikicdn.com/ts/seller/d1/3f/ae/13ce3d83ab6b6c5e77e6377ad61dc4a5.jpg",
+          "query_value": 1,
+          "seller_address": ""
+        },
+        {
+          "count": 131,
+          "display_value": "SHOP ESTAR",
+          "logo": "https://salt.tikicdn.com/ts/seller/24/53/9d/7707f599e74e8f9f4590251c95f1804d.jpg",
+          "query_value": 353876,
+          "seller_address": "350/28/3 Lê Đức Thọ, Phường 6, Quận Gò Vấp, Hồ Chí Minh"
+        },
+        {
+          "count": 115,
+          "display_value": "Bataca",
+          "logo": "https://salt.tikicdn.com/ts/seller/f9/63/d3/de6b57d6f8a0061b72cf6e6bbfebdead.jpg",
+          "query_value": 2859,
+          "seller_address": "Số 15 ngõ 44 Phố Võ Thị Sáu, Phường Thanh Nhàn, Quận Hai Bà Trưng, Hà Nội"
+        },
+        {
+          "count": 105,
+          "display_value": "MEANWELL STORE",
+          "logo": "https://salt.tikicdn.com/ts/seller/76/94/c1/7d42a666def1d7191d00ca4c603898b8.jpg",
+          "query_value": 321316,
+          "seller_address": ""
+        },
+        {
+          "count": 101,
+          "display_value": "Shop Thành Long Mực in",
+          "logo": "https://salt.tikicdn.com/ts/seller/4b/54/1a/f385a79a716cb3505f152e7af8c769aa.png",
+          "query_value": 183951,
+          "seller_address": "57 đường số 18 khu dân cư Bình Hưng, ấp 2, Xã Bình Hưng, Huyện Bình Chánh, Hồ Chí Minh"
+        },
+        {
+          "count": 90,
+          "display_value": "Long Hưng Official Store",
+          "logo": "https://salt.tikicdn.com/ts/seller/b2/cf/f3/b221778b5f611db85b108bdd0e80410d.jpg",
+          "query_value": 162514,
+          "seller_address": "73-75-77-79 Nguyễn Đình Chiểu, Phường An Hội, TP Bến Tre, Phường 1, Thành phố Bến Tre, Bến Tre"
+        },
+        {
+          "count": 75,
+          "display_value": "Nhất Phát Phát",
+          "logo": "https://salt.tikicdn.com/ts/seller/4b/54/1a/f385a79a716cb3505f152e7af8c769aa.png",
+          "query_value": 4377,
+          "seller_address": ".84 Nguyễn Quý Đức, Phường An Phú, Thành phố Thủ Đức, Hồ Chí Minh"
+        },
+        {
+          "count": 73,
+          "display_value": "Danh Shop",
+          "logo": "https://salt.tikicdn.com/ts/seller/ba/d6/3a/6354d3044f7aaaf51eb767b03fe320b1.jpg",
+          "query_value": 133440,
+          "seller_address": ""
+        },
+        {
+          "count": 70,
+          "display_value": "Viễn Thông VINANET",
+          "logo": "https://salt.tikicdn.com/ts/seller/6e/e8/e4/e40e8bb39c8d8b62a8127f7dcde559e6.jpg",
+          "query_value": 73219,
+          "seller_address": ""
+        },
+        {
+          "count": 70,
+          "display_value": "Kmart Store",
+          "logo": "https://salt.tikicdn.com/ts/seller/e3/32/bd/a4cc0d53bad64f401513fa56f728c40e.jpg",
+          "query_value": 200265,
+          "seller_address": ""
+        },
+        {
+          "count": 68,
+          "display_value": "LONG GIA COMPUTER",
+          "logo": "https://salt.tikicdn.com/ts/seller/31/96/1d/4f370c0734f7e88c1cb3007e83c854ef.jpg",
+          "query_value": 8371,
+          "seller_address": "467/13 Điện Biên Phủ, Phường 3, Quận 3, Phường 03, Quận 3, Hồ Chí Minh"
+        },
+        {
+          "count": 66,
+          "display_value": "Vo Hoang Trading Co.,Ltd",
+          "logo": "https://salt.tikicdn.com/ts/seller/4c/7c/c6/ca9548271b96f67a99a56c39bd1e99ea.jpg",
+          "query_value": 1242,
+          "seller_address": ""
+        },
+        {
+          "count": 65,
+          "display_value": "CAMERA PHƯƠNG ĐÔNG Store",
+          "logo": "https://salt.tikicdn.com/ts/seller/37/d3/2c/b6e0da6f3fe1bf5fde5bdb592cbbce7b.jpg",
+          "query_value": 298886,
+          "seller_address": ""
+        },
+        {
+          "count": 63,
+          "display_value": "SIEUTHIHANGCONGNGHE",
+          "logo": "https://salt.tikicdn.com/ts/seller/d3/ee/85/2b88a8a1fec642949c09c2a1c6908758.jpg",
+          "query_value": 5346,
+          "seller_address": "116/18 , đường thiên phước, P9. Q Tân Bình, TP HCM, Phường 09, Quận Tân Bình, Hồ Chí Minh"
+        }
+      ]
+    }
+  ],
+  "amplitude": {
+    "number_of_brand_store_ad": "0",
+    "number_of_display_ad": "0",
+    "number_of_sponsored_product_ad": "0",
+    "search_experiment_variant": "",
+    "search_location": "VN039006001",
+    "search_request": "http://tiki.vn/full/v2/products?_v=filter_revamp&aggregations=2&category=1846&category=1846&include=advertisement&limit=2&limit=2&page=1&page=1",
+    "selected_sort_option": "",
+    "seller_product_sku": "5517358684027,9458864915759",
+    "user_strategy": "filter_revamp"
+  },
+  "sort_options": [
+    {
+      "display_value": "Phổ biến",
+      "query_value": "default",
+      "selected": true
+    },
+    {
+      "display_value": "Bán chạy",
+      "query_value": "top_seller",
+      "selected": false
+    },
+    {
+      "display_value": "Hàng mới",
+      "query_value": "newest",
+      "selected": false
+    },
+    {
+      "display_value": "Giá thấp đến cao",
+      "query_value": "price,asc",
+      "selected": false
+    },
+    {
+      "display_value": "Giá cao đến thấp",
+      "query_value": "price,desc",
+      "selected": false
+    }
+  ],
+  "widgets": [],
+  "experiment_variants": {},
+  "model_debug": null,
+  "trace_id": "sVF0jPgjVDaTlGVj",
+  "items": []
+}
