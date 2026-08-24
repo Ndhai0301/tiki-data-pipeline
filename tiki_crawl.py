@@ -30,6 +30,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 
@@ -104,6 +105,11 @@ BROWSER_HEADERS = {
 
 RETRY_STATUS = {429, 500, 502, 503, 504}
 LOG = logging.getLogger("tiki")
+
+# Partition dt=/hour= dung gio dia phuong (khong phai UTC): lich cron chay
+# theo gio he thong (Asia/Bangkok), nguoi doc thu muc "hour=06" can hieu
+# ngay la 6h sang gio VN, khong phai tu quy doi UTC. Xem docs/storage.md.
+LOCAL_TZ = ZoneInfo("Asia/Bangkok")
 
 
 # --------------------------------------------------------------------------- #
@@ -290,8 +296,8 @@ def normalize_item(item: dict, crawled_at: str) -> dict:
 # Ghi file
 # --------------------------------------------------------------------------- #
 
-def write_bronze(records: list[dict], out_dir: Path, dt: str, category: str) -> Path:
-    path = out_dir / "bronze" / f"dt={dt}" / f"category={category}"
+def write_bronze(records: list[dict], out_dir: Path, dt: str, hour: str, category: str) -> Path:
+    path = out_dir / "bronze" / f"dt={dt}" / f"hour={hour}" / f"category={category}"
     path.mkdir(parents=True, exist_ok=True)
     file_path = path / "listings.jsonl.gz"
     with gzip.open(file_path, "wt", encoding="utf-8") as fh:
@@ -301,10 +307,10 @@ def write_bronze(records: list[dict], out_dir: Path, dt: str, category: str) -> 
     return file_path
 
 
-def write_silver(rows: list[dict], out_dir: Path, dt: str, category: str) -> Path | None:
+def write_silver(rows: list[dict], out_dir: Path, dt: str, hour: str, category: str) -> Path | None:
     if not rows:
         return None
-    path = out_dir / "silver" / f"dt={dt}" / f"category={category}"
+    path = out_dir / "silver" / f"dt={dt}" / f"hour={hour}" / f"category={category}"
     path.mkdir(parents=True, exist_ok=True)
     file_path = path / "products.parquet"
     df = pd.DataFrame(rows).drop_duplicates(subset=["product_id"], keep="first")
@@ -360,18 +366,26 @@ def main(argv: list[str] | None = None) -> int:
     )
     logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-    client = TikiClient(rps=args.rps, impersonate=args.impersonate)
-
     out_dir = Path(args.out).expanduser().resolve()
-    now = datetime.now(timezone.utc)
-    dt = now.strftime("%Y-%m-%d")
-    crawled_at = now.isoformat(timespec="seconds")
+    now_utc = datetime.now(timezone.utc)
+    now_local = now_utc.astimezone(LOCAL_TZ)
+    dt = now_local.strftime("%Y-%m-%d")
+    hour = now_local.strftime("%H")
+    crawled_at = now_utc.isoformat(timespec="seconds")
     total = 0
 
     tokens = list(CATEGORY_ALIASES) if args.categories.strip().lower() == "all" else args.categories.split(",")
-    for token in tokens:
+    for i, token in enumerate(tokens):
+        if i > 0:
+            time.sleep(random.uniform(3, 8))
+
         name, cat_id = resolve_category(token)
         LOG.info("=== Category %s (id=%d) ===", name, cat_id)
+
+        # Session rieng cho moi category (thay vi dung chung 1 session xuyen suot):
+        # tranh gui hang tram request lien tuc cung 1 trackity_id/session, kieu
+        # hanh vi de bi WAF cua Tiki nhan dien la bot va tra ve trang captcha.
+        client = TikiClient(rps=args.rps, impersonate=args.impersonate)
 
         raw_items = list(crawl_listing(client, cat_id, args.pages))
         if not raw_items:
@@ -385,9 +399,9 @@ def main(argv: list[str] | None = None) -> int:
                     item["_detail"] = detail
             LOG.info("Da lay detail cho %d san pham", min(len(raw_items), args.detail_limit))
 
-        write_bronze(raw_items, out_dir, dt, name)
+        write_bronze(raw_items, out_dir, dt, hour, name)
         rows = [normalize_item(it, crawled_at) for it in raw_items]
-        write_silver(rows, out_dir, dt, name)
+        write_silver(rows, out_dir, dt, hour, name)
         total += len(rows)
 
     LOG.info("Xong. Tong %d san pham. Output: %s", total, out_dir)
