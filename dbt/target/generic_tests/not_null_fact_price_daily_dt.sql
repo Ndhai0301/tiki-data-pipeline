@@ -1,0 +1,1 @@
+{{ test_not_null(column_name="dt", model=get_where_subquery(ref('fact_price_daily'))) }}

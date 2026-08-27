@@ -1,0 +1,1 @@
+{{ test_unique(column_name="ngay", model=get_where_subquery(ref('dim_date'))) }}

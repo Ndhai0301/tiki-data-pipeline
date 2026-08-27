@@ -1,0 +1,602 @@
+==================== 2026-08-27T08:40:59.719380Z | d80c3af2-a38d-4444-aa98-4c761feed50a ====================
+08:40:59.721591 [info ]: Starting dbt LSP server
+08:40:59.721633 [info ]: Connecting to LSP client on port 8000
+08:40:59.723664 [info ]: Successfully connected to LSP client
+08:40:59.723718 [info ]: Creating LSP service...
+08:40:59.835386 [info ]: Creating LSP server...
+08:40:59.835437 [info ]: Starting LSP server...
+08:40:59.979730 [info ]: Started loading project
+08:41:00.143252 [info ]: Started parsing
+08:41:00.212524 [info ]: Finished loading project [  0.23s]
+08:41:00.274343 [info ]: Finished parsing [  0.13s]
+08:41:00.275194 [info ]: Cached model count updated: 2 models (estimate)
+08:41:00.275242 [info ]: Cached model count updated: 2 models (accurate)
+08:41:00.279608 [info ]: Started scheduling
+08:41:00.283751 [info ]: Finished scheduling [  0.00s]
+08:41:00.364920 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:41:00.472445 [info ]: Started building task graph
+08:41:00.477692 [info ]: Finished building task graph [  0.01s]
+08:41:00.485499 [info ]: Started rendering (3 nodes)
+08:41:00.487052 [info ]: Started model staging.stg_listings
+08:41:00.487804 [debug]: Started rendering model staging.stg_listings
+08:41:00.506670 [debug]: Finished rendering [  0.02s] model staging.stg_listings [success]
+08:41:00.507446 [info ]: Started analyzing (3 nodes)
+08:41:00.507498 [debug]: Started analyzing model staging.stg_listings
+08:41:00.507586 [info ]:  Succeeded [  0.02s] model staging.stg_listings (view)
+08:41:00.507633 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:41:00.507658 [info ]: Started snapshot gold.dim_product_snapshot
+08:41:00.507670 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:41:00.507729 [info ]: Started model gold.fact_price_daily
+08:41:00.507777 [debug]: Started rendering model gold.fact_price_daily
+08:41:00.510335 [debug]: Started analyzing model gold.fact_price_daily
+08:41:00.510397 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:41:00.510420 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:41:00.510434 [info ]: Finished rendering [  0.02s] (3 nodes, 0 skipped, 0 errors)
+08:41:00.510491 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:41:00.510585 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:41:00.510643 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:41:00.511551 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:41:00.511612 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:41:00.511622 [info ]: Finished analyzing [  0.00s] (3 nodes, 0 skipped, 0 errors)
+08:41:00.532654 [info ]: Cached model count updated: 2 models (accurate)
+08:42:00.251650 [info ]: Started loading project
+08:42:00.265859 [info ]: Started loading project
+08:42:00.266379 [info ]: Finished loading project [  0.01s]
+08:42:00.326024 [info ]: Started parsing
+08:42:00.374830 [info ]: Finished loading project [  0.11s]
+08:42:00.390087 [info ]: Finished parsing [  0.06s]
+08:42:00.390303 [info ]: Cached model count updated: 2 models (estimate)
+08:42:00.390344 [info ]: Cached model count updated: 2 models (accurate)
+08:42:00.390380 [info ]: Started scheduling
+08:42:00.390491 [info ]: Finished scheduling [  0.00s]
+08:42:00.391680 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:42:00.510371 [info ]: Started building task graph
+08:42:00.510526 [info ]: Finished building task graph [  0.00s]
+08:42:00.510698 [info ]: Started rendering (3 nodes)
+08:42:00.510751 [info ]: Started model staging.stg_listings
+08:42:00.510768 [debug]: Started rendering model staging.stg_listings
+08:42:00.512766 [info ]: Started analyzing (3 nodes)
+08:42:00.512834 [debug]: Finished rendering [  0.00s] model staging.stg_listings [success]
+08:42:00.512969 [debug]: Started analyzing model staging.stg_listings
+08:42:00.513139 [info ]:  Succeeded [  0.00s] model staging.stg_listings (view)
+08:42:00.513370 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:42:00.513570 [info ]: Started model gold.fact_price_daily
+08:42:00.513628 [debug]: Started rendering model gold.fact_price_daily
+08:42:00.513701 [info ]: Started snapshot gold.dim_product_snapshot
+08:42:00.513795 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:42:00.516423 [debug]: Started analyzing model gold.fact_price_daily
+08:42:00.516520 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:42:00.516522 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:00.516547 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:42:00.516555 [info ]: Finished rendering [  0.01s] (3 nodes, 0 skipped, 0 errors)
+08:42:00.516590 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:42:00.516611 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:00.516655 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:42:00.516716 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:42:00.516727 [info ]: Finished analyzing [  0.00s] (3 nodes, 0 skipped, 0 errors)
+08:42:00.520935 [info ]: Cached model count updated: 2 models (accurate)
+08:42:09.547522 [info ]: Started loading project
+08:42:09.551433 [info ]: Started loading project
+08:42:09.551854 [info ]: Finished loading project [  0.00s]
+08:42:09.607023 [info ]: Started parsing
+08:42:09.684355 [info ]: Finished loading project [  0.13s]
+08:42:09.704332 [info ]: Finished parsing [  0.10s]
+08:42:09.704609 [info ]: Cached model count updated: 3 models (estimate)
+08:42:09.704652 [info ]: Cached model count updated: 3 models (accurate)
+08:42:09.704681 [info ]: Started scheduling
+08:42:09.704801 [info ]: Finished scheduling [  0.00s]
+08:42:09.706298 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:42:09.836502 [info ]: Started building task graph
+08:42:09.836725 [info ]: Finished building task graph [  0.00s]
+08:42:09.836958 [info ]: Started rendering (4 nodes)
+08:42:09.837021 [info ]: Started model staging.stg_listings
+08:42:09.837041 [debug]: Started rendering model staging.stg_listings
+08:42:09.839387 [debug]: Finished rendering [  0.00s] model staging.stg_listings [success]
+08:42:09.839461 [info ]: Started analyzing (4 nodes)
+08:42:09.839483 [debug]: Started analyzing model staging.stg_listings
+08:42:09.839547 [info ]:  Succeeded [  0.00s] model staging.stg_listings (view)
+08:42:09.839600 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:42:09.839624 [info ]: Started model staging.stg_price_readings
+08:42:09.839635 [debug]: Started rendering model staging.stg_price_readings
+08:42:09.839687 [info ]: Started snapshot gold.dim_product_snapshot
+08:42:09.839736 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:42:09.839793 [info ]: Started model gold.fact_price_daily
+08:42:09.839807 [debug]: Started rendering model gold.fact_price_daily
+08:42:09.841233 [debug]: Started analyzing model staging.stg_price_readings
+08:42:09.841295 [debug]: Finished rendering [  0.00s] model staging.stg_price_readings [success]
+08:42:09.841337 [info ]:  Succeeded [  0.00s] model staging.stg_price_readings (view)
+08:42:09.841395 [debug]: Finished analyzing [  0.00s] model staging.stg_price_readings [success]
+08:42:09.841891 [debug]: Started analyzing model gold.fact_price_daily
+08:42:09.841953 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:42:09.842005 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:09.842093 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:42:09.842137 [info ]: Finished rendering [  0.01s] (4 nodes, 0 skipped, 0 errors)
+08:42:09.842172 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:42:09.842232 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:09.842253 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:42:09.842268 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:42:09.842274 [info ]: Finished analyzing [  0.00s] (4 nodes, 0 skipped, 0 errors)
+08:42:09.845498 [info ]: Cached model count updated: 3 models (accurate)
+08:42:15.200173 [info ]: Started loading project
+08:42:15.204542 [info ]: Started loading project
+08:42:15.205023 [info ]: Finished loading project [  0.00s]
+08:42:15.266492 [info ]: Started parsing
+08:42:15.310795 [info ]: Finished loading project [  0.11s]
+08:42:15.327900 [info ]: Finished parsing [  0.06s]
+08:42:15.328159 [info ]: Cached model count updated: 3 models (estimate)
+08:42:15.328210 [info ]: Cached model count updated: 3 models (accurate)
+08:42:15.328243 [info ]: Started scheduling
+08:42:15.328312 [info ]: Finished scheduling [  0.00s]
+08:42:15.329312 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:42:15.430337 [info ]: Started building task graph
+08:42:15.430495 [info ]: Finished building task graph [  0.00s]
+08:42:15.430709 [info ]: Started rendering (4 nodes)
+08:42:15.430756 [info ]: Started model staging.stg_listings
+08:42:15.430770 [debug]: Started rendering model staging.stg_listings
+08:42:15.432729 [info ]: Started analyzing (4 nodes)
+08:42:15.432806 [debug]: Finished rendering [  0.00s] model staging.stg_listings [success]
+08:42:15.432848 [debug]: Started analyzing model staging.stg_listings
+08:42:15.432948 [info ]:  Succeeded [  0.00s] model staging.stg_listings (view)
+08:42:15.433009 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:42:15.433034 [info ]: Started model gold.fact_price_daily
+08:42:15.433113 [debug]: Started rendering model gold.fact_price_daily
+08:42:15.433173 [info ]: Started snapshot gold.dim_product_snapshot
+08:42:15.433222 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:42:15.433249 [info ]: Started model staging.stg_price_readings
+08:42:15.433289 [debug]: Started rendering model staging.stg_price_readings
+08:42:15.435065 [debug]: Started analyzing model staging.stg_price_readings
+08:42:15.435092 [debug]: Finished rendering [  0.00s] model staging.stg_price_readings [success]
+08:42:15.435179 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:15.435199 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:42:15.435228 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:42:15.435274 [info ]: Finished rendering [  0.00s] (4 nodes, 0 skipped, 0 errors)
+08:42:15.435296 [debug]: Started analyzing model gold.fact_price_daily
+08:42:15.435357 [info ]:  Succeeded [  0.00s] model staging.stg_price_readings (view)
+08:42:15.435409 [debug]: Finished analyzing [  0.00s] model staging.stg_price_readings [success]
+08:42:15.435434 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:42:15.435445 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:15.435484 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:42:15.435499 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:42:15.435505 [info ]: Finished analyzing [  0.00s] (4 nodes, 0 skipped, 0 errors)
+08:42:15.438932 [info ]: Cached model count updated: 3 models (accurate)
+08:42:21.107776 [info ]: Started loading project
+08:42:21.110731 [info ]: Started loading project
+08:42:21.111204 [info ]: Finished loading project [  0.00s]
+08:42:21.161351 [info ]: Started parsing
+08:42:21.206800 [info ]: Finished loading project [  0.10s]
+08:42:21.229533 [info ]: Finished parsing [  0.07s]
+08:42:21.229781 [info ]: Cached model count updated: 4 models (estimate)
+08:42:21.229822 [info ]: Cached model count updated: 4 models (accurate)
+08:42:21.229858 [info ]: Started scheduling
+08:42:21.229948 [info ]: Finished scheduling [  0.00s]
+08:42:21.231058 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:42:21.343411 [info ]: Started building task graph
+08:42:21.343566 [info ]: Finished building task graph [  0.00s]
+08:42:21.343758 [info ]: Started rendering (5 nodes)
+08:42:21.343807 [info ]: Started model staging.stg_listings
+08:42:21.343822 [debug]: Started rendering model staging.stg_listings
+08:42:21.343872 [info ]: Started model gold.dim_date
+08:42:21.343888 [debug]: Started rendering model gold.dim_date
+08:42:21.345383 [info ]: Started analyzing (5 nodes)
+08:42:21.345439 [debug]: Started analyzing model gold.dim_date
+08:42:21.345464 [debug]: Finished rendering [  0.00s] model gold.dim_date [success]
+08:42:21.345471 [debug]: Finished rendering [  0.00s] model staging.stg_listings [success]
+08:42:21.345494 [debug]: Started analyzing model staging.stg_listings
+08:42:21.345589 [info ]:  Succeeded [  0.00s] model staging.stg_listings (view)
+08:42:21.345644 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:42:21.345663 [info ]: Started snapshot gold.dim_product_snapshot
+08:42:21.345670 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:42:21.345715 [info ]: Started model staging.stg_price_readings
+08:42:21.345755 [debug]: Started rendering model staging.stg_price_readings
+08:42:21.345780 [info ]: Started model gold.fact_price_daily
+08:42:21.345828 [debug]: Started rendering model gold.fact_price_daily
+08:42:21.345860 [info ]:  Succeeded [  0.00s] model gold.dim_date (table)
+08:42:21.345909 [debug]: Finished analyzing [  0.00s] model gold.dim_date [success]
+08:42:21.347089 [debug]: Started analyzing model staging.stg_price_readings
+08:42:21.347158 [debug]: Finished rendering [  0.00s] model staging.stg_price_readings [success]
+08:42:21.347179 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:21.347238 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:42:21.347298 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:42:21.347345 [info ]: Finished rendering [  0.00s] (5 nodes, 0 skipped, 0 errors)
+08:42:21.347364 [debug]: Started analyzing model gold.fact_price_daily
+08:42:21.347424 [info ]:  Succeeded [  0.00s] model staging.stg_price_readings (view)
+08:42:21.347469 [debug]: Finished analyzing [  0.00s] model staging.stg_price_readings [success]
+08:42:21.347504 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:42:21.347560 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:21.347583 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:42:21.347652 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:42:21.347668 [info ]: Finished analyzing [  0.00s] (5 nodes, 0 skipped, 0 errors)
+08:42:21.350160 [info ]: Cached model count updated: 4 models (accurate)
+08:42:26.513345 [info ]: Started loading project
+08:42:26.521907 [info ]: Started loading project
+08:42:26.522670 [info ]: Finished loading project [  0.01s]
+08:42:26.578047 [info ]: Started parsing
+08:42:26.622446 [info ]: Finished loading project [  0.10s]
+08:42:26.644071 [info ]: Finished parsing [  0.07s]
+08:42:26.644584 [info ]: Cached model count updated: 5 models (estimate)
+08:42:26.644636 [info ]: Cached model count updated: 5 models (accurate)
+08:42:26.644696 [info ]: Started scheduling
+08:42:26.644864 [info ]: Finished scheduling [  0.00s]
+08:42:26.646486 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:42:26.766681 [info ]: Started building task graph
+08:42:26.766860 [info ]: Finished building task graph [  0.00s]
+08:42:26.766982 [info ]: Started rendering (6 nodes)
+08:42:26.767032 [info ]: Started model gold.dim_date
+08:42:26.767045 [debug]: Started rendering model gold.dim_date
+08:42:26.767104 [info ]: Started model staging.stg_listings
+08:42:26.767150 [debug]: Started rendering model staging.stg_listings
+08:42:26.769092 [debug]: Finished rendering [  0.00s] model gold.dim_date [success]
+08:42:26.769171 [info ]: Started analyzing (6 nodes)
+08:42:26.769184 [debug]: Started analyzing model gold.dim_date
+08:42:26.769213 [debug]: Finished rendering [  0.00s] model staging.stg_listings [success]
+08:42:26.769238 [debug]: Started analyzing model staging.stg_listings
+08:42:26.769593 [info ]:  Succeeded [  0.00s] model staging.stg_listings (view)
+08:42:26.769649 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:42:26.769673 [info ]: Started model gold.fact_price_daily
+08:42:26.769686 [debug]: Started rendering model gold.fact_price_daily
+08:42:26.769755 [info ]: Started model gold.dim_brand
+08:42:26.769804 [debug]: Started rendering model gold.dim_brand
+08:42:26.769860 [info ]: Started snapshot gold.dim_product_snapshot
+08:42:26.769876 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:42:26.769901 [info ]: Started model staging.stg_price_readings
+08:42:26.769944 [debug]: Started rendering model staging.stg_price_readings
+08:42:26.770025 [info ]:  Succeeded [  0.00s] model gold.dim_date (table)
+08:42:26.770043 [debug]: Finished analyzing [  0.00s] model gold.dim_date [success]
+08:42:26.771413 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:42:26.771571 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:26.771889 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:42:26.771942 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:26.772176 [debug]: Started analyzing model gold.dim_brand
+08:42:26.772260 [debug]: Finished rendering [  0.00s] model gold.dim_brand [success]
+08:42:26.772262 [debug]: Started analyzing model gold.fact_price_daily
+08:42:26.772281 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:42:26.772291 [info ]:  Succeeded [  0.00s] model gold.dim_brand (table)
+08:42:26.772309 [debug]: Finished analyzing [  0.00s] model gold.dim_brand [success]
+08:42:26.772477 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:42:26.772534 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:42:26.773354 [debug]: Started analyzing model staging.stg_price_readings
+08:42:26.773419 [debug]: Finished rendering [  0.00s] model staging.stg_price_readings [success]
+08:42:26.773433 [info ]: Finished rendering [  0.01s] (6 nodes, 0 skipped, 0 errors)
+08:42:26.773494 [info ]:  Succeeded [  0.00s] model staging.stg_price_readings (view)
+08:42:26.773554 [debug]: Finished analyzing [  0.00s] model staging.stg_price_readings [success]
+08:42:26.773565 [info ]: Finished analyzing [  0.00s] (6 nodes, 0 skipped, 0 errors)
+08:42:26.777208 [info ]: Cached model count updated: 5 models (accurate)
+08:42:31.455570 [info ]: Started loading project
+08:42:31.462428 [info ]: Started loading project
+08:42:31.462894 [info ]: Finished loading project [  0.01s]
+08:42:31.517072 [info ]: Started parsing
+08:42:31.574610 [info ]: Finished loading project [  0.11s]
+08:42:31.598797 [info ]: Finished parsing [  0.08s]
+08:42:31.599076 [info ]: Cached model count updated: 6 models (estimate)
+08:42:31.599124 [info ]: Cached model count updated: 6 models (accurate)
+08:42:31.599239 [info ]: Started scheduling
+08:42:31.599417 [info ]: Finished scheduling [  0.00s]
+08:42:31.600810 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:42:31.732086 [info ]: Started building task graph
+08:42:31.732336 [info ]: Finished building task graph [  0.00s]
+08:42:31.732555 [info ]: Started rendering (7 nodes)
+08:42:31.732650 [info ]: Started model gold.dim_date
+08:42:31.732766 [debug]: Started rendering model gold.dim_date
+08:42:31.732964 [info ]: Started model staging.stg_listings
+08:42:31.733040 [debug]: Started rendering model staging.stg_listings
+08:42:31.735978 [info ]: Started analyzing (7 nodes)
+08:42:31.736029 [debug]: Started analyzing model gold.dim_date
+08:42:31.736125 [debug]: Started analyzing model staging.stg_listings
+08:42:31.736186 [info ]:  Succeeded [  0.00s] model gold.dim_date (table)
+08:42:31.736285 [debug]: Finished rendering [  0.00s] model gold.dim_date [success]
+08:42:31.736318 [debug]: Finished analyzing [  0.00s] model gold.dim_date [success]
+08:42:31.736376 [debug]: Finished rendering [  0.00s] model staging.stg_listings [success]
+08:42:31.736417 [info ]:  Succeeded [  0.00s] model staging.stg_listings (view)
+08:42:31.736434 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:42:31.736452 [info ]: Started model gold.dim_seller
+08:42:31.736463 [debug]: Started rendering model gold.dim_seller
+08:42:31.736569 [info ]: Started model staging.stg_price_readings
+08:42:31.736990 [debug]: Started rendering model staging.stg_price_readings
+08:42:31.737269 [info ]: Started model gold.fact_price_daily
+08:42:31.737324 [debug]: Started rendering model gold.fact_price_daily
+08:42:31.737535 [info ]: Started model gold.dim_brand
+08:42:31.737604 [debug]: Started rendering model gold.dim_brand
+08:42:31.737725 [info ]: Started snapshot gold.dim_product_snapshot
+08:42:31.738589 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:42:31.739336 [debug]: Finished rendering [  0.00s] model gold.dim_seller [success]
+08:42:31.739451 [debug]: Started analyzing model gold.dim_seller
+08:42:31.739518 [info ]:  Succeeded [  0.00s] model gold.dim_seller (table)
+08:42:31.739536 [debug]: Finished analyzing [  0.00s] model gold.dim_seller [success]
+08:42:31.740598 [debug]: Started analyzing model gold.dim_brand
+08:42:31.740669 [debug]: Started analyzing model gold.fact_price_daily
+08:42:31.740732 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:42:31.740791 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:42:31.740862 [info ]:  Succeeded [  0.00s] model gold.dim_brand (table)
+08:42:31.740882 [debug]: Finished analyzing [  0.00s] model gold.dim_brand [success]
+08:42:31.740970 [debug]: Started analyzing model staging.stg_price_readings
+08:42:31.741026 [info ]:  Succeeded [  0.00s] model staging.stg_price_readings (view)
+08:42:31.741044 [debug]: Finished analyzing [  0.00s] model staging.stg_price_readings [success]
+08:42:31.741453 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:42:31.741616 [debug]: Finished rendering [  0.00s] model gold.dim_brand [success]
+08:42:31.741676 [debug]: Finished rendering [  0.00s] model staging.stg_price_readings [success]
+08:42:31.741686 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:31.741697 [info ]: Finished rendering [  0.01s] (7 nodes, 0 skipped, 0 errors)
+08:42:31.741626 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:42:31.741904 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:42:31.742002 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:31.742015 [info ]: Finished analyzing [  0.01s] (7 nodes, 0 skipped, 0 errors)
+08:42:31.746919 [info ]: Cached model count updated: 6 models (accurate)
+08:42:35.241133 [info ]: Started loading project
+08:42:35.244353 [info ]: Started loading project
+08:42:35.244730 [info ]: Finished loading project [  0.00s]
+08:42:35.297565 [info ]: Started parsing
+08:42:35.344965 [info ]: Finished loading project [  0.10s]
+08:42:35.367251 [info ]: Finished parsing [  0.07s]
+08:42:35.367482 [info ]: Cached model count updated: 7 models (estimate)
+08:42:35.367519 [info ]: Cached model count updated: 7 models (accurate)
+08:42:35.367552 [info ]: Started scheduling
+08:42:35.367635 [info ]: Finished scheduling [  0.00s]
+08:42:35.368779 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:42:35.468724 [info ]: Started building task graph
+08:42:35.468907 [info ]: Finished building task graph [  0.00s]
+08:42:35.469069 [info ]: Started rendering (8 nodes)
+08:42:35.469122 [info ]: Started model gold.dim_date
+08:42:35.469135 [debug]: Started rendering model gold.dim_date
+08:42:35.469185 [info ]: Started model staging.stg_listings
+08:42:35.469196 [debug]: Started rendering model staging.stg_listings
+08:42:35.470719 [info ]: Started analyzing (8 nodes)
+08:42:35.470765 [debug]: Started analyzing model gold.dim_date
+08:42:35.470844 [debug]: Finished rendering [  0.00s] model gold.dim_date [success]
+08:42:35.470897 [debug]: Finished rendering [  0.00s] model staging.stg_listings [success]
+08:42:35.470930 [debug]: Started analyzing model staging.stg_listings
+08:42:35.470957 [info ]:  Succeeded [  0.00s] model gold.dim_date (table)
+08:42:35.470980 [debug]: Finished analyzing [  0.00s] model gold.dim_date [success]
+08:42:35.471027 [info ]:  Succeeded [  0.00s] model staging.stg_listings (view)
+08:42:35.471074 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:42:35.471095 [info ]: Started model gold.dim_brand
+08:42:35.471161 [debug]: Started rendering model gold.dim_brand
+08:42:35.471213 [info ]: Started model gold.dim_seller
+08:42:35.471255 [debug]: Started rendering model gold.dim_seller
+08:42:35.471279 [info ]: Started model gold.fact_price_daily
+08:42:35.471293 [debug]: Started rendering model gold.fact_price_daily
+08:42:35.471316 [info ]: Started model gold.dim_category
+08:42:35.471332 [debug]: Started rendering model gold.dim_category
+08:42:35.471349 [info ]: Started snapshot gold.dim_product_snapshot
+08:42:35.471358 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:42:35.471376 [info ]: Started model staging.stg_price_readings
+08:42:35.471383 [debug]: Started rendering model staging.stg_price_readings
+08:42:35.473257 [debug]: Started analyzing model gold.dim_brand
+08:42:35.473453 [info ]:  Succeeded [  0.00s] model gold.dim_brand (table)
+08:42:35.473514 [debug]: Finished analyzing [  0.00s] model gold.dim_brand [success]
+08:42:35.473538 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:35.473534 [debug]: Finished rendering [  0.00s] model gold.dim_brand [success]
+08:42:35.473614 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:42:35.473730 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:42:35.473782 [debug]: Started analyzing model gold.fact_price_daily
+08:42:35.473807 [debug]: Finished rendering [  0.00s] model staging.stg_price_readings [success]
+08:42:35.473820 [debug]: Started analyzing model staging.stg_price_readings
+08:42:35.473900 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:42:35.473954 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:42:35.474019 [debug]: Finished rendering [  0.00s] model gold.dim_seller [success]
+08:42:35.474032 [debug]: Started analyzing model gold.dim_seller
+08:42:35.474048 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:42:35.474069 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:42:35.474084 [info ]:  Succeeded [  0.00s] model staging.stg_price_readings (view)
+08:42:35.474102 [debug]: Finished analyzing [  0.00s] model staging.stg_price_readings [success]
+08:42:35.474147 [info ]:  Succeeded [  0.00s] model gold.dim_seller (table)
+08:42:35.474196 [debug]: Finished analyzing [  0.00s] model gold.dim_seller [success]
+08:42:35.475436 [debug]: Started analyzing model gold.dim_category
+08:42:35.475496 [debug]: Finished rendering [  0.00s] model gold.dim_category [success]
+08:42:35.475520 [info ]: Finished rendering [  0.01s] (8 nodes, 0 skipped, 0 errors)
+08:42:35.475581 [info ]:  Succeeded [  0.00s] model gold.dim_category (table)
+08:42:35.475636 [debug]: Finished analyzing [  0.00s] model gold.dim_category [success]
+08:42:35.475645 [info ]: Finished analyzing [  0.00s] (8 nodes, 0 skipped, 0 errors)
+08:42:35.478917 [info ]: Cached model count updated: 7 models (accurate)
+08:45:03.379449 [info ]: Started loading project
+08:45:03.385070 [info ]: Started loading project
+08:45:03.385688 [info ]: Finished loading project [  0.01s]
+08:45:03.443167 [info ]: Started parsing
+08:45:03.486920 [info ]: Finished loading project [  0.10s]
+08:45:03.507800 [info ]: Finished parsing [  0.06s]
+08:45:03.508071 [info ]: Cached model count updated: 8 models (estimate)
+08:45:03.508151 [info ]: Cached model count updated: 8 models (accurate)
+08:45:03.508224 [info ]: Started scheduling
+08:45:03.508389 [info ]: Finished scheduling [  0.00s]
+08:45:03.510272 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:45:03.608205 [info ]: Started building task graph
+08:45:03.608401 [info ]: Finished building task graph [  0.00s]
+08:45:03.608594 [info ]: Started rendering (9 nodes)
+08:45:03.608676 [info ]: Started model gold.dim_date
+08:45:03.608695 [debug]: Started rendering model gold.dim_date
+08:45:03.608803 [info ]: Started model staging.stg_listings
+08:45:03.609223 [debug]: Started rendering model staging.stg_listings
+08:45:03.611954 [info ]: Started analyzing (9 nodes)
+08:45:03.612003 [debug]: Started analyzing model staging.stg_listings
+08:45:03.612022 [debug]: Finished rendering [  0.00s] model staging.stg_listings [success]
+08:45:03.612087 [info ]:  Succeeded [  0.00s] model staging.stg_listings (view)
+08:45:03.612116 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:45:03.612132 [info ]: Started model gold.dim_brand
+08:45:03.612142 [debug]: Started rendering model gold.dim_brand
+08:45:03.612161 [info ]: Started snapshot gold.dim_product_snapshot
+08:45:03.612173 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:45:03.612189 [info ]: Started model gold.dim_category
+08:45:03.612576 [debug]: Started rendering model gold.dim_category
+08:45:03.612640 [info ]: Started model gold.dim_seller
+08:45:03.612656 [debug]: Started rendering model gold.dim_seller
+08:45:03.612684 [info ]: Started model staging.stg_price_readings
+08:45:03.612695 [debug]: Started rendering model staging.stg_price_readings
+08:45:03.612716 [debug]: Finished rendering [  0.00s] model gold.dim_date [success]
+08:45:03.612733 [debug]: Started analyzing model gold.dim_date
+08:45:03.612824 [info ]:  Succeeded [  0.00s] model gold.dim_date (table)
+08:45:03.612872 [debug]: Finished analyzing [  0.00s] model gold.dim_date [success]
+08:45:03.614981 [debug]: Started analyzing model staging.stg_price_readings
+08:45:03.615098 [debug]: Finished rendering [  0.00s] model staging.stg_price_readings [success]
+08:45:03.615105 [info ]:  Succeeded [  0.00s] model staging.stg_price_readings (view)
+08:45:03.615217 [debug]: Finished analyzing [  0.00s] model staging.stg_price_readings [success]
+08:45:03.615845 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:45:03.615965 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:45:03.615998 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:45:03.616018 [debug]: Started analyzing model gold.dim_brand
+08:45:03.616046 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:45:03.616043 [debug]: Finished rendering [  0.00s] model gold.dim_brand [success]
+08:45:03.616085 [info ]:  Succeeded [  0.00s] model gold.dim_brand (table)
+08:45:03.616103 [debug]: Finished analyzing [  0.00s] model gold.dim_brand [success]
+08:45:03.616563 [debug]: Started analyzing model gold.dim_seller
+08:45:03.616635 [debug]: Finished rendering [  0.00s] model gold.dim_seller [success]
+08:45:03.616659 [info ]:  Succeeded [  0.00s] model gold.dim_seller (table)
+08:45:03.616701 [debug]: Finished analyzing [  0.00s] model gold.dim_seller [success]
+08:45:03.616840 [debug]: Started analyzing model gold.dim_category
+08:45:03.616883 [debug]: Finished rendering [  0.00s] model gold.dim_category [success]
+08:45:03.616943 [info ]:  Succeeded [  0.00s] model gold.dim_category (table)
+08:45:03.616972 [debug]: Finished analyzing [  0.00s] model gold.dim_category [success]
+08:45:03.616996 [info ]: Started model gold.dim_product
+08:45:03.617043 [debug]: Started rendering model gold.dim_product
+08:45:03.618827 [debug]: Started analyzing model gold.dim_product
+08:45:03.618882 [debug]: Finished rendering [  0.00s] model gold.dim_product [success]
+08:45:03.618934 [info ]:  Succeeded [  0.00s] model gold.dim_product (table)
+08:45:03.618958 [debug]: Finished analyzing [  0.00s] model gold.dim_product [success]
+08:45:03.618977 [info ]: Started model gold.fact_price_daily
+08:45:03.619017 [debug]: Started rendering model gold.fact_price_daily
+08:45:03.620554 [debug]: Started analyzing model gold.fact_price_daily
+08:45:03.620604 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:45:03.620617 [info ]: Finished rendering [  0.01s] (9 nodes, 0 skipped, 0 errors)
+08:45:03.620766 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:45:03.620820 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:45:03.620831 [info ]: Finished analyzing [  0.01s] (9 nodes, 0 skipped, 0 errors)
+08:45:03.623611 [info ]: Cached model count updated: 8 models (accurate)
+08:45:49.063435 [info ]: Started loading project
+08:45:49.067015 [info ]: Started loading project
+08:45:49.067438 [info ]: Finished loading project [  0.00s]
+08:45:49.112606 [info ]: Started parsing
+08:45:49.135244 [info ]: Finished loading project [  0.07s]
+08:45:49.155932 [info ]: Finished parsing [  0.04s]
+08:45:49.156194 [info ]: Cached model count updated: 9 models (estimate)
+08:45:49.156234 [info ]: Cached model count updated: 9 models (accurate)
+08:45:49.156329 [info ]: Started scheduling
+08:45:49.156553 [info ]: Finished scheduling [  0.00s]
+08:45:49.158459 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:45:49.251199 [info ]: Started building task graph
+08:45:49.251427 [info ]: Finished building task graph [  0.00s]
+08:45:49.251582 [info ]: Started rendering (10 nodes)
+08:45:49.251624 [info ]: Started model gold.dim_date
+08:45:49.251662 [debug]: Started rendering model gold.dim_date
+08:45:49.251714 [info ]: Started model staging.stg_listings
+08:45:49.251753 [debug]: Started rendering model staging.stg_listings
+08:45:49.254019 [debug]: Finished rendering [  0.00s] model gold.dim_date [success]
+08:45:49.254073 [info ]: Started analyzing (10 nodes)
+08:45:49.254083 [debug]: Started analyzing model gold.dim_date
+08:45:49.254134 [info ]:  Succeeded [  0.00s] model gold.dim_date (table)
+08:45:49.254146 [debug]: Finished analyzing [  0.00s] model gold.dim_date [success]
+08:45:49.254272 [debug]: Started analyzing model staging.stg_listings
+08:45:49.254306 [debug]: Finished rendering [  0.00s] model staging.stg_listings [success]
+08:45:49.254358 [info ]:  Succeeded [  0.00s] model staging.stg_listings (view)
+08:45:49.254372 [debug]: Finished analyzing [  0.00s] model staging.stg_listings [success]
+08:45:49.254385 [info ]: Started snapshot gold.dim_product_snapshot
+08:45:49.254398 [debug]: Started rendering snapshot gold.dim_product_snapshot
+08:45:49.254446 [info ]: Started model gold.dim_seller
+08:45:49.254513 [debug]: Started rendering model gold.dim_seller
+08:45:49.254530 [info ]: Started model gold.dim_category
+08:45:49.254538 [debug]: Started rendering model gold.dim_category
+08:45:49.254547 [info ]: Started model staging.stg_price_readings
+08:45:49.254555 [debug]: Started rendering model staging.stg_price_readings
+08:45:49.254574 [info ]: Started model gold.dim_brand
+08:45:49.254591 [debug]: Started rendering model gold.dim_brand
+08:45:49.257309 [debug]: Started analyzing model staging.stg_price_readings
+08:45:49.257369 [debug]: Finished rendering [  0.00s] model staging.stg_price_readings [success]
+08:45:49.257422 [info ]:  Succeeded [  0.00s] model staging.stg_price_readings (view)
+08:45:49.257491 [debug]: Finished analyzing [  0.00s] model staging.stg_price_readings [success]
+08:45:49.257517 [debug]: Finished rendering [  0.00s] model gold.dim_category [success]
+08:45:49.257532 [debug]: Started analyzing model gold.dim_category
+08:45:49.257772 [debug]: Finished rendering [  0.00s] model gold.dim_brand [success]
+08:45:49.257838 [debug]: Started analyzing model gold.dim_brand
+08:45:49.257893 [info ]:  Succeeded [  0.00s] model gold.dim_category (table)
+08:45:49.257909 [debug]: Finished analyzing [  0.00s] model gold.dim_category [success]
+08:45:49.257924 [debug]: Finished rendering [  0.00s] model gold.dim_seller [success]
+08:45:49.257935 [debug]: Started analyzing model gold.dim_seller
+08:45:49.258031 [debug]: Finished rendering [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:45:49.258048 [debug]: Started analyzing snapshot gold.dim_product_snapshot
+08:45:49.258093 [info ]:  Succeeded [  0.00s] snapshot gold.dim_product_snapshot (table)
+08:45:49.258106 [debug]: Finished analyzing [  0.00s] snapshot gold.dim_product_snapshot [success]
+08:45:49.258162 [info ]:  Succeeded [  0.00s] model gold.dim_brand (table)
+08:45:49.258207 [debug]: Finished analyzing [  0.00s] model gold.dim_brand [success]
+08:45:49.258292 [info ]:  Succeeded [  0.00s] model gold.dim_seller (table)
+08:45:49.258338 [debug]: Finished analyzing [  0.00s] model gold.dim_seller [success]
+08:45:49.258358 [info ]: Started model gold.dim_product
+08:45:49.258398 [debug]: Started rendering model gold.dim_product
+08:45:49.259961 [debug]: Started analyzing model gold.dim_product
+08:45:49.260018 [debug]: Finished rendering [  0.00s] model gold.dim_product [success]
+08:45:49.260071 [info ]:  Succeeded [  0.00s] model gold.dim_product (table)
+08:45:49.260095 [debug]: Finished analyzing [  0.00s] model gold.dim_product [success]
+08:45:49.260118 [info ]: Started model gold.fact_price_change
+08:45:49.260161 [debug]: Started rendering model gold.fact_price_change
+08:45:49.260210 [info ]: Started model gold.fact_price_daily
+08:45:49.260251 [debug]: Started rendering model gold.fact_price_daily
+08:45:49.262071 [debug]: Started analyzing model gold.fact_price_change
+08:45:49.262089 [debug]: Finished rendering [  0.00s] model gold.fact_price_change [success]
+08:45:49.262168 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:45:49.262183 [info ]: Finished rendering [  0.01s] (10 nodes, 0 skipped, 0 errors)
+08:45:49.262200 [debug]: Started analyzing model gold.fact_price_daily
+08:45:49.262311 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:45:49.262361 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:45:49.262380 [info ]:  Succeeded [  0.00s] model gold.fact_price_change (table)
+08:45:49.262424 [debug]: Finished analyzing [  0.00s] model gold.fact_price_change [success]
+08:45:49.262433 [info ]: Finished analyzing [  0.01s] (10 nodes, 0 skipped, 0 errors)
+08:45:49.266377 [info ]: Cached model count updated: 9 models (accurate)
+08:45:57.787833 [info ]: Started loading project
+08:45:57.804934 [info ]: Started parsing
+08:45:57.840403 [info ]: Finished loading project [  0.05s]
+08:45:57.887565 [info ]: Finished parsing [  0.08s]
+08:45:57.888758 [info ]: Cached model count updated: 9 models (estimate)
+08:45:57.888797 [info ]: Cached model count updated: 9 models (accurate)
+08:45:57.888848 [info ]: Started scheduling
+08:45:57.890316 [info ]: Finished scheduling [  0.00s]
+08:45:57.890801 [warn ]: dbt1000: The selection criterion '' does not match any enabled nodes
+08:45:57.890842 [warn ]: dbt1000: Nothing to do. Try checking your model configs and model specification args
+08:45:57.991221 [info ]: Started building task graph
+08:45:57.991409 [info ]: Finished building task graph [  0.00s]
+08:45:57.991571 [debug]: Incremental compilation - 0 nodes selected: {}
+08:45:57.994254 [info ]: Cached model count updated: 9 models (accurate)
+08:47:43.919402 [info ]: Started loading project
+08:47:43.924651 [info ]: Started parsing
+08:47:43.939331 [info ]: Finished loading project [  0.02s]
+08:47:43.980438 [info ]: Finished parsing [  0.06s]
+08:47:43.981374 [info ]: Cached model count updated: 9 models (estimate)
+08:47:43.981412 [info ]: Cached model count updated: 9 models (accurate)
+08:47:43.981492 [info ]: Started scheduling
+08:47:43.982645 [info ]: Finished scheduling [  0.00s]
+08:47:43.984008 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:47:44.089149 [info ]: Started building task graph
+08:47:44.089378 [info ]: Finished building task graph [  0.00s]
+08:47:44.089571 [info ]: Started rendering (1 nodes)
+08:47:44.089621 [info ]: Started model gold.fact_price_daily
+08:47:44.089635 [debug]: Started rendering model gold.fact_price_daily
+08:47:44.092002 [info ]: Started analyzing (1 nodes)
+08:47:44.092017 [debug]: Finished rendering [  0.00s] model gold.fact_price_daily [success]
+08:47:44.092083 [debug]: Started analyzing model gold.fact_price_daily
+08:47:44.092095 [info ]: Finished rendering [  0.00s] (1 nodes, 0 skipped, 0 errors)
+08:47:44.092183 [info ]:  Succeeded [  0.00s] model gold.fact_price_daily (table)
+08:47:44.092243 [debug]: Finished analyzing [  0.00s] model gold.fact_price_daily [success]
+08:47:44.092254 [info ]: Finished analyzing [  0.00s] (1 nodes, 0 skipped, 0 errors)
+08:47:44.092450 [debug]: Incremental compilation - 1 nodes selected: {"model.tiki_gold.fact_price_daily"}
+08:47:44.096442 [info ]: Cached model count updated: 9 models (accurate)
+08:47:51.495661 [info ]: Started loading project
+08:47:51.501184 [info ]: Started parsing
+08:47:51.527695 [info ]: Finished loading project [  0.03s]
+08:47:51.567755 [info ]: Finished parsing [  0.07s]
+08:47:51.568788 [info ]: Cached model count updated: 9 models (estimate)
+08:47:51.568825 [info ]: Cached model count updated: 9 models (accurate)
+08:47:51.568877 [info ]: Started scheduling
+08:47:51.569082 [info ]: Finished scheduling [  0.00s]
+08:47:51.570143 [warn ]: dbt1050: No metadata adapter found for adapter type postgres
+08:47:51.673210 [info ]: Started building task graph
+08:47:51.673366 [info ]: Finished building task graph [  0.00s]
+08:47:51.673489 [info ]: Started rendering (1 nodes)
+08:47:51.673538 [info ]: Started model gold.fact_price_change
+08:47:51.673552 [debug]: Started rendering model gold.fact_price_change
+08:47:51.676153 [info ]: Started analyzing (1 nodes)
+08:47:51.676202 [debug]: Started analyzing model gold.fact_price_change
+08:47:51.676227 [debug]: Finished rendering [  0.00s] model gold.fact_price_change [success]
+08:47:51.676241 [info ]: Finished rendering [  0.00s] (1 nodes, 0 skipped, 0 errors)
+08:47:51.676304 [info ]:  Succeeded [  0.00s] model gold.fact_price_change (table)
+08:47:51.676369 [debug]: Finished analyzing [  0.00s] model gold.fact_price_change [success]
+08:47:51.676380 [info ]: Finished analyzing [  0.00s] (1 nodes, 0 skipped, 0 errors)
+08:47:51.676474 [debug]: Incremental compilation - 1 nodes selected: {"model.tiki_gold.fact_price_change"}
+08:47:51.680030 [info ]: Cached model count updated: 9 models (accurate)
+08:56:36.178631 [info ]: Started loading project
+08:56:36.189498 [info ]: Finished loading project [  0.01s]
+08:56:36.189836 [info ]: Cached model count updated: 9 models (accurate)

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_price_readings
+    description: >
+      stg_listings dedupe ve grain (product_id, dt, hour) - dung chung cho
+      fact_price_daily va fact_price_change de khong lap lai logic
+      DISTINCT ON o 2 noi.
+    columns:
+      - name: product_id
+        tests: [not_null]
+      - name: dt
+        tests: [not_null]
+      - name: hour
+        tests: [not_null]
