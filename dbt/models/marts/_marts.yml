@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: fact_price_daily
+    description: "Grain (product_id, dt, hour) - 1 dong = gia do duoc 1 lan crawl"
+    columns:
+      - name: product_id
+        tests: [not_null]
+      - name: dt
+        tests: [not_null]
+      - name: hour
+        tests: [not_null]
+      - name: price
+        tests: [not_null]

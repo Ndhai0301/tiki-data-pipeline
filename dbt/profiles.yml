@@ -1,0 +1,15 @@
+tiki:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      # Chay tu host: mac dinh localhost:5433 (port lo ra ngoai). Chay tu
+      # container Airflow: docker-compose.yml dat DBT_PG_HOST=postgres,
+      # DBT_PG_PORT=5432 (ten service + port noi bo trong cung network).
+      host: "{{ env_var('DBT_PG_HOST', 'localhost') }}"
+      port: "{{ env_var('DBT_PG_PORT', '5433') | as_number }}"
+      user: tiki
+      password: tiki
+      dbname: tiki
+      schema: staging
+      threads: 4

@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: listings
+        description: >
+          Nap tho tu Silver Parquet (load_silver_to_postgres.py), full
+          refresh moi lan chay - khong incremental. Grain: 1 dong = 1 san
+          pham trong 1 lan crawl (product_id, dt, hour), co the trung
+          product_id giua cac category khac nhau cung 1 lan crawl.

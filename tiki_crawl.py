@@ -202,7 +202,7 @@ class TikiClient:
 # --------------------------------------------------------------------------- #
 
 def crawl_listing(
-    client: TikiClient, category_id: int, pages: int, limit: int = 40
+    client: TikiClient, category_id: int, pages: int, crawled_at: str, limit: int = 40
 ) -> Iterator[dict]:
     working_url: str | None = None
 
@@ -232,6 +232,10 @@ def crawl_listing(
         for item in items:
             item["_category_id"] = category_id
             item["_page"] = page
+            # Stamp ngay trong Bronze (khong chi luc ghi Silver) - can thiet
+            # de job Spark (chi doc Bronze, khong qua normalize_item() cua
+            # Python) cung co duoc crawled_at khi tao Silver.
+            item["_crawled_at"] = crawled_at
             yield item
 
 
@@ -307,6 +311,40 @@ def write_bronze(records: list[dict], out_dir: Path, dt: str, hour: str, categor
     return file_path
 
 
+# Ep kieu tuong minh cho tung cot Silver - khong de pandas tu suy luan.
+# Ly do: cot nao toan gia tri None (vd seller_name/primary_category_name
+# khi khong dung --detail) se bi pandas/parquet suy nham thanh kieu int,
+# gay xung dot kieu khi 1 file khac (co --detail, co gia tri string that)
+# duoc doc gop chung bang glob (DuckDB/Spark). Dung nullable dtype cua
+# pandas ("Int64", "string", "boolean") de an toan voi gia tri null.
+SILVER_SCHEMA: dict[str, str] = {
+    "product_id": "Int64",
+    "sku": "string",
+    "name": "string",
+    "url_key": "string",
+    "url": "string",
+    "price": "Int64",
+    "list_price": "Int64",
+    "discount": "Int64",
+    "discount_rate": "Int64",
+    "rating_average": "Float64",
+    "review_count": "Int64",
+    "quantity_sold": "Int64",
+    "brand_id": "Int64",
+    "brand_name": "string",
+    "seller_id": "Int64",
+    "seller_name": "string",
+    "category_id": "Int64",
+    "primary_category_name": "string",
+    "inventory_status": "string",
+    "is_authentic": "boolean",
+    "thumbnail_url": "string",
+    "badge_count": "Int64",
+    "page": "Int64",
+    "crawled_at": "string",
+}
+
+
 def write_silver(rows: list[dict], out_dir: Path, dt: str, hour: str, category: str) -> Path | None:
     if not rows:
         return None
@@ -314,6 +352,7 @@ def write_silver(rows: list[dict], out_dir: Path, dt: str, hour: str, category: 
     path.mkdir(parents=True, exist_ok=True)
     file_path = path / "products.parquet"
     df = pd.DataFrame(rows).drop_duplicates(subset=["product_id"], keep="first")
+    df = df.astype(SILVER_SCHEMA)
     df.to_parquet(file_path, index=False, compression="snappy")
     LOG.info("Silver -> %s (%d dong sau dedupe)", file_path, len(df))
     return file_path
@@ -353,6 +392,21 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default="chrome",
         help="Profile TLS cua curl_cffi (chrome, chrome131, chrome124...)",
     )
+    p.add_argument(
+        "--dt",
+        default=None,
+        help="Ghi de partition dt= (YYYY-MM-DD) thay vi tu tinh theo gio hien tai. "
+        "Dung khi goi tu Airflow voi {{ ds }} - LUU Y: day la nhan (label) cho "
+        "partition, KHONG phai crawl lai gia CU cua ngay do - Tiki chi tra ve gia "
+        "HIEN TAI. Mac dinh hour=00 khi dung --dt (trừ khi co --hour rieng).",
+    )
+    p.add_argument("--hour", default=None, help="Ghi de partition hour= (HH). Mac dinh: 00 neu co --dt, khong thi tu gio he thong.")
+    p.add_argument(
+        "--bronze-only",
+        action="store_true",
+        help="Chi ghi Bronze, bo qua write_silver() (dung khi Silver se duoc "
+        "job Spark rieng tao, vd trong Airflow DAG).",
+    )
     p.add_argument("--verbose", action="store_true")
     return p.parse_args(argv)
 
@@ -369,8 +423,8 @@ def main(argv: list[str] | None = None) -> int:
     out_dir = Path(args.out).expanduser().resolve()
     now_utc = datetime.now(timezone.utc)
     now_local = now_utc.astimezone(LOCAL_TZ)
-    dt = now_local.strftime("%Y-%m-%d")
-    hour = now_local.strftime("%H")
+    dt = args.dt or now_local.strftime("%Y-%m-%d")
+    hour = args.hour or ("00" if args.dt else now_local.strftime("%H"))
     crawled_at = now_utc.isoformat(timespec="seconds")
     total = 0
 
@@ -387,7 +441,7 @@ def main(argv: list[str] | None = None) -> int:
         # hanh vi de bi WAF cua Tiki nhan dien la bot va tra ve trang captcha.
         client = TikiClient(rps=args.rps, impersonate=args.impersonate)
 
-        raw_items = list(crawl_listing(client, cat_id, args.pages))
+        raw_items = list(crawl_listing(client, cat_id, args.pages, crawled_at))
         if not raw_items:
             LOG.warning("Category %s khong lay duoc gi", name)
             continue
@@ -400,9 +454,10 @@ def main(argv: list[str] | None = None) -> int:
             LOG.info("Da lay detail cho %d san pham", min(len(raw_items), args.detail_limit))
 
         write_bronze(raw_items, out_dir, dt, hour, name)
-        rows = [normalize_item(it, crawled_at) for it in raw_items]
-        write_silver(rows, out_dir, dt, hour, name)
-        total += len(rows)
+        if not args.bronze_only:
+            rows = [normalize_item(it, crawled_at) for it in raw_items]
+            write_silver(rows, out_dir, dt, hour, name)
+        total += len(raw_items)
 
     LOG.info("Xong. Tong %d san pham. Output: %s", total, out_dir)
     return 0 if total else 1

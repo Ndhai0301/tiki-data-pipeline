@@ -1,0 +1,10 @@
+version: 2
+
+snapshots:
+  - name: dim_product_snapshot
+    description: "SCD2 cho thuoc tinh san pham (xem docs/erd.md)"
+    columns:
+      - name: product_id
+        tests: [not_null]
+      - name: dbt_valid_from
+        tests: [not_null]
