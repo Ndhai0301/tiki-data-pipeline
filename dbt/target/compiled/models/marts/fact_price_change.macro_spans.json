@@ -28,52 +28,78 @@
   {
     "macro_span": {
       "start": {
-        "line": 11,
+        "line": 17,
         "col": 19,
-        "index": 456
+        "index": 772
       },
       "stop": {
-        "line": 11,
+        "line": 17,
         "col": 50,
-        "index": 487
+        "index": 803
       }
     },
     "expanded_span": {
       "start": {
-        "line": 11,
+        "line": 17,
         "col": 19,
-        "index": 422
+        "index": 738
       },
       "stop": {
-        "line": 11,
+        "line": 17,
         "col": 56,
-        "index": 459
+        "index": 775
       }
     }
   },
   {
     "macro_span": {
       "start": {
-        "line": 30,
+        "line": 36,
         "col": 10,
-        "index": 1019
+        "index": 1335
       },
       "stop": {
-        "line": 30,
+        "line": 36,
         "col": 34,
-        "index": 1043
+        "index": 1359
       }
     },
     "expanded_span": {
       "start": {
-        "line": 30,
+        "line": 36,
         "col": 10,
-        "index": 991
+        "index": 1307
       },
       "stop": {
-        "line": 30,
+        "line": 36,
         "col": 37,
-        "index": 1018
+        "index": 1334
+      }
+    }
+  },
+  {
+    "macro_span": {
+      "start": {
+        "line": 46,
+        "col": 6,
+        "index": 1546
+      },
+      "stop": {
+        "line": 46,
+        "col": 27,
+        "index": 1567
+      }
+    },
+    "expanded_span": {
+      "start": {
+        "line": 46,
+        "col": 6,
+        "index": 1521
+      },
+      "stop": {
+        "line": 46,
+        "col": 30,
+        "index": 1545
       }
     }
   }

@@ -56,6 +56,8 @@ models:
   - name: fact_price_change
     description: "Chi ghi dong khi gia thuc su doi so voi lan crawl truoc do cua cung san pham"
     columns:
+      - name: date_key
+        tests: [not_null]
       - name: product_key
         tests: [not_null]
       - name: changed_at

@@ -34,17 +34,20 @@ data/
 ## Quy ước partition: `dt=` + `hour=` + `category=`
 
 - **`dt=YYYY-MM-DD`**: ngày crawl.
-- **`hour=HH`**: giờ crawl (00/06/12/18, khớp lịch cron 6 tiếng/lần). Bắt
-  buộc có — nếu chỉ partition theo `dt` như ví dụ ban đầu, 4 lần crawl
-  cùng ngày sẽ ghi đè lẫn nhau và **mất hết dữ liệu để so biến động giá
-  trong ngày** (mục tiêu chính của dự án).
+- **`hour=HH`**: giờ crawl. **Đã đổi (2026-09)**: cron host (4 lần/ngày,
+  00/06/12/18) đã tắt hẳn, chuyển hoàn toàn sang Airflow DAG `tiki_daily`
+  chạy **1 lần/ngày lúc 12h trưa** (`schedule="0 12 * * *"` trong
+  `dags/tiki_daily.py`), nên hiện tại `hour=` luôn là `12`. Vẫn giữ
+  partition này (không gộp vào `dt=`) để nếu sau này cần crawl nhiều lần/
+  ngày trở lại thì không phải đổi cấu trúc thư mục, và để tương thích với
+  dữ liệu cũ (`hour=00/06/12/18`) đã crawl trước 2026-09.
 - **`category=<ten>`**: alias category trong `CATEGORY_ALIASES`.
 - **Cả 2 giá trị `dt` và `hour` dùng giờ ĐỊA PHƯƠNG (Asia/Bangkok,
-  +07:00)**, không dùng UTC. Lý do: lịch cron (`0 */6 * * *`) chạy theo
-  giờ hệ thống (đã xác nhận là Asia/Bangkok), con người đọc thư mục
-  `hour=06` sẽ hiểu ngay là "crawl lúc 6h sáng giờ VN" — dùng UTC sẽ ra
-  `hour=23`/`hour=05`... gây nhầm lẫn không đáng có ở quy mô 1 project cá
-  nhân. Đánh đổi: mất tính "portable" thường thấy khi dùng UTC, chấp nhận
+  +07:00)**, không dùng UTC. Lý do: Airflow DAG chạy theo giờ hệ thống đã
+  cấu hình Asia/Bangkok, con người đọc thư mục `hour=12` sẽ hiểu ngay là
+  "crawl lúc 12h trưa giờ VN" — dùng UTC sẽ ra giờ lệch, gây nhầm lẫn
+  không đáng có ở quy mô 1 project cá nhân. Đánh đổi: mất tính "portable"
+  thường thấy khi dùng UTC, chấp nhận
   được vì hệ thống chỉ chạy trên 1 máy, 1 múi giờ.
 
 ## ✅ Đã migrate (2026-08-24)

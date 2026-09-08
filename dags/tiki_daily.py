@@ -6,9 +6,10 @@ crawl_tiki -> validate_bronze -> spark_to_silver -> load_postgres
 
 3 nguyen tac bat buoc (xem docs/storage.md va cuoc trao doi ve idempotent):
 
-1. Idempotent theo {{ ds }}: crawl_tiki nhan --dt {{ ds }}, ghi vao dung
-   partition dt=/hour=00 - chay lai DAG cho cung ngay se GHI DE dung
-   partition do (khong nhan doi), KHONG phai chay lai se ra gia tri
+1. Idempotent theo {{ ds }}: crawl_tiki nhan --dt {{ ds }} --hour 12
+   (lich chay 12h trua, xem schedule ben duoi), ghi vao dung partition
+   dt=/hour=12 - chay lai DAG cho cung ngay se GHI DE dung partition do
+   (khong nhan doi), KHONG phai chay lai se ra gia tri
    Y HET nhu lan truoc (Tiki tra ve gia HIEN TAI, co the da doi giua 2
    lan retry - day la gioi han that cua nguon du lieu, khong phai bug).
 
@@ -73,9 +74,16 @@ def refresh_dashboard_callable(**context):
 with DAG(
     dag_id="tiki_daily",
     description="Crawl Tiki -> validate -> Spark Silver -> Postgres -> dbt -> dashboard",
-    schedule="0 6 * * *",
+    schedule="0 12 * * *",
     start_date=pendulum.datetime(2026, 8, 24, tz="Asia/Bangkok"),
     catchup=False,
+    # dbt (dbt_snapshot/dbt_run/dbt_test) ghi vao 1 schema Postgres CHUNG
+    # (gold/staging), khong partition rieng theo run nhu Bronze/Silver -
+    # 2 DAG run chay dbt CUNG LUC se dam vao nhau luc dbt rename bang tam
+    # (loi that da gap: "relation dim_date__dbt_backup already exists").
+    # max_active_runs=1: cac DAG run xep hang chay tuan tu, khong bao gio
+    # 2 run cung dbt vao Postgres 1 luc.
+    max_active_runs=1,
     default_args=default_args,
     on_failure_callback=alert_callback,
     tags=["tiki"],
@@ -86,7 +94,7 @@ with DAG(
         bash_command=(
             f"cd {REPO} && python3 tiki_crawl.py "
             "--categories all --pages 20 --rps 1.0 "
-            "--dt {{ ds }} --bronze-only "
+            "--dt {{ ds }} --hour 12 --bronze-only "
             f"--out {DATA_DIR}"
         ),
     )
@@ -95,7 +103,7 @@ with DAG(
         task_id="validate_bronze",
         bash_command=(
             f"cd {REPO} && python3 validate_bronze.py "
-            "--dt {{ ds }} --hour 00 "
+            "--dt {{ ds }} --hour 12 "
             f"--data-dir {DATA_DIR} --min-rows 5000"
         ),
     )
@@ -116,7 +124,12 @@ with DAG(
 
     dbt_snapshot = BashOperator(
         task_id="dbt_snapshot",
-        bash_command=f"cd {REPO}/dbt && dbt snapshot --profiles-dir .",
+        # dim_product_snapshot.sql doc tu staging.stg_listings, nhung
+        # load_postgres vua DROP TABLE ... CASCADE xoa luon view do (xem
+        # load_silver_to_postgres.py) - phai "dbt run --select staging"
+        # dung lai view truoc khi snapshot doc duoc, neu khong se loi
+        # "relation staging.stg_listings does not exist".
+        bash_command=f"cd {REPO}/dbt && dbt run --select staging --profiles-dir . && dbt snapshot --profiles-dir .",
     )
 
     dbt_run = BashOperator(

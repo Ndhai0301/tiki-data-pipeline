@@ -7,6 +7,12 @@
 --
 -- Lan crawl DAU TIEN cua 1 product_id khong tinh la "doi gia" (khong co
 -- gia truoc de so) - loai bo bang price_truoc is not null.
+--
+-- date_key: join them dim_date de co surrogate key nhu fact_price_daily,
+-- thay vi chi co changed_at (timestamp). Muc dich: BI tool (Metabase,
+-- Power BI...) noi truc tiep date_key <-> dim_date.date_key duoc, khong
+-- phai tu tao cot tinh toan rieng (truncate changed_at ve date) moi lan
+-- dung cong cu khac.
 with reading as (
     select * from {{ ref('stg_price_readings') }}
 ),
@@ -31,11 +37,14 @@ product as (
 )
 
 select
+    dd.date_key,
     dp.product_key,
     with_prev.crawled_at  as changed_at,
     with_prev.price_truoc as price_cu,
     with_prev.price       as price_moi
 from with_prev
+join {{ ref('dim_date') }} as dd
+    on dd.ngay = with_prev.dt
 join product as dp
     on dp.product_id = with_prev.product_id
     and with_prev.dt < coalesce(dp.valid_to, 'infinity'::date)
