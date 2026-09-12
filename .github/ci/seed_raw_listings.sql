@@ -1,0 +1,31 @@
+CREATE SCHEMA IF NOT EXISTS raw;
+
+CREATE TABLE raw.listings (
+    product_id             bigint,
+    sku                    varchar,
+    name                   varchar,
+    url_key                varchar,
+    url                    varchar,
+    price                  bigint,
+    list_price             bigint,
+    discount               bigint,
+    discount_rate          bigint,
+    rating_average         double precision,
+    review_count           bigint,
+    quantity_sold          bigint,
+    brand_id               bigint,
+    brand_name             varchar,
+    seller_id              bigint,
+    seller_name            varchar,
+    category_id            bigint,
+    primary_category_name  varchar,
+    inventory_status       varchar,
+    is_authentic           boolean,
+    thumbnail_url          varchar,
+    badge_count            bigint,
+    page                   bigint,
+    crawled_at             varchar,
+    category               varchar,
+    dt                     date,
+    hour                   varchar
+);

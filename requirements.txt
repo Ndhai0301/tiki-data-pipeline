@@ -1,0 +1,9 @@
+curl_cffi
+pandas
+pyarrow
+duckdb
+dbt-core
+dbt-postgres
+pyspark==3.5.8
+requests
+pytest

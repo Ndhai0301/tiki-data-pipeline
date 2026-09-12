@@ -9,4 +9,4 @@ cron.log
 dbt/target/
 dbt/logs/
 
-docs
+docs/

@@ -4,20 +4,35 @@ A daily pipeline that tracks **product price movements on Tiki**: crawl → meda
 
 Primary goal: record the price of ~20,000 products every day to analyze price trends, promotions, and the history of product attribute changes.
 
+## Highlights
+
+- **258,989** daily price observations and **16,549** real price-change events tracked across **22,034** products in 29 categories (21 days of continuous crawling, still growing daily)
+- Full **ELT pipeline** built from scratch: custom crawler (bypasses WAF via TLS fingerprint impersonation) → PySpark → DuckDB → dbt star schema, orchestrated by Airflow
+- **SCD Type 2** dimension modeling (`dim_product`) to preserve full history of attribute changes, not just overwrite them
+- **32 automated dbt tests** + a pytest suite for the transform layer — data quality is verified on every run, not eyeballed
+- Diagnosed and fixed several real production incidents along the way (race conditions, host/container UID permission conflicts, SCD noise from unstable source fields) — see [docs/](docs/) for the design decisions behind them
+
 ---
 
 ## Architecture
 
-```
-                          Airflow DAG "tiki_daily" (12:00 noon, daily)
-                                        │
-  ┌──────────────┐   ┌───────────────┐  │  ┌───────────────┐   ┌──────────────┐   ┌──────────┐
-  │  crawl_tiki  │──▶│ validate_bronze│──┼─▶│spark_to_silver│──▶│ load_postgres │──▶│   dbt    │──▶ Metabase / Power BI
-  └──────────────┘   └───────────────┘  │  └───────────────┘   └──────────────┘   └──────────┘
-     Bronze              quality gate       Silver                raw.listings      staging → marts
-   (JSONL.gz)          (fail fast)         (Parquet)             (DuckDB, Postgres)  (star schema, gold)
-                                        │
-                                        └─▶ compact_silver (merge small Silver files, runs in parallel)
+Orchestrated end-to-end by the Airflow DAG `tiki_daily`, scheduled daily at 12:00 noon (`Asia/Bangkok`).
+
+```mermaid
+flowchart LR
+    A[crawl_tiki] --> B[validate_bronze]
+    B --> C[spark_to_silver]
+    C --> D[load_postgres]
+    C --> E[compact_silver]
+    D --> F[dbt_snapshot]
+    F --> G[dbt_run]
+    G --> H[dbt_test]
+    H --> I[refresh_dashboard]
+    I --> BI[Metabase / Power BI]
+
+    A -. writes .-> Bronze[(Bronze: JSONL.gz)]
+    C -. writes .-> Silver[(Silver: Parquet)]
+    D -. writes .-> Gold[(Gold: Postgres star schema)]
 ```
 
 | Layer | Format | Location | Role |
@@ -166,10 +181,3 @@ Star schema — see [docs/erd.md](docs/erd.md) for details.
 - **`dim_brand` is empty**: the Tiki listing API does not return `brand_id` (only the detail API does). To analyze by brand, `tiki_crawl.py` would need to also call the detail API — the tradeoff is a much slower crawl.
 
 ---
-
-## Reference docs
-
-- [docs/data-model.md](docs/data-model.md) — data model design decisions
-- [docs/erd.md](docs/erd.md) — detailed star schema ERD
-- [docs/storage.md](docs/storage.md) — partition conventions, compaction
-- [docs/tiki_api_schema.md](docs/tiki_api_schema.md) — Tiki API response schema
