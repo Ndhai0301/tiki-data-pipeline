@@ -1,8 +1,5 @@
 {{ config(materialized='table') }}
 
--- Snowflake dim tach tu stg_listings (xem docs/erd.md). Tam thoi giu toi
--- gian (chua co logo/seller_address) - xem ly do o docs/erd.md muc
--- "dim_seller giu toi gian".
 with seller as (
     select distinct on (seller_id)
         seller_id,

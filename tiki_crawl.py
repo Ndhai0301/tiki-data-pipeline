@@ -1,21 +1,4 @@
 #!/usr/bin/env python3
-"""
-tiki_crawl.py - Crawl san pham Tiki -> Bronze (raw JSONL.gz) + Silver (Parquet).
-
-Dung curl_cffi de gia lap TLS fingerprint cua Chrome - bat buoc, vi requests
-thuong bi WAF cua Tiki chan 403 (da kiem chung: curl_cffi impersonate=chrome
-vuot duoc 403 ca khi khong warm-up, requests thuong thi luon bi chan).
-
-Cai dat:
-    pip install curl_cffi pandas pyarrow
-
-Chay:
-    python3 tiki_crawl.py --categories laptop --pages 1 --verbose
-    python3 tiki_crawl.py --categories laptop,dien-thoai --pages 10 --rps 1.0
-    python3 tiki_crawl.py --categories laptop --pages 5 --detail --detail-limit 100
-    python3 tiki_crawl.py --categories all --pages 20 --rps 1.0
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -39,10 +22,6 @@ try:
 except ImportError as exc:  # pragma: no cover
     raise SystemExit("Thieu curl_cffi. Cai bang: pip install curl_cffi") from exc
 
-# --------------------------------------------------------------------------- #
-# Cau hinh
-# --------------------------------------------------------------------------- #
-
 BASE = "https://tiki.vn"
 LISTING_URLS = [
     f"{BASE}/api/personalish/v1/blocks/listings",
@@ -57,7 +36,6 @@ CATEGORY_ALIASES: dict[str, int] = {
     "tai-nghe": 8215,
     "sach-tieng-viet": 316,
     "do-choi": 2549,
-    # 26 category cap 1 tren menu chinh cua tiki.vn (do ngay 2026-08-21)
     "thoi-trang-nam": 915,
     "thoi-trang-nu": 931,
     "tui-vi-nu": 976,
@@ -106,15 +84,8 @@ BROWSER_HEADERS = {
 RETRY_STATUS = {429, 500, 502, 503, 504}
 LOG = logging.getLogger("tiki")
 
-# Partition dt=/hour= dung gio dia phuong (khong phai UTC): lich cron chay
-# theo gio he thong (Asia/Bangkok), nguoi doc thu muc "hour=06" can hieu
-# ngay la 6h sang gio VN, khong phai tu quy doi UTC. Xem docs/storage.md.
 LOCAL_TZ = ZoneInfo("Asia/Bangkok")
 
-
-# --------------------------------------------------------------------------- #
-# Rate limiter
-# --------------------------------------------------------------------------- #
 
 class RateLimiter:
     def __init__(self, rps: float) -> None:
@@ -132,13 +103,7 @@ class RateLimiter:
             self._last = time.monotonic()
 
 
-# --------------------------------------------------------------------------- #
-# HTTP client
-# --------------------------------------------------------------------------- #
-
 class TikiClient:
-    """Bao boc curl_cffi (impersonate Chrome) kem retry + rate limit."""
-
     def __init__(
         self,
         rps: float = 1.0,
@@ -197,10 +162,6 @@ class TikiClient:
         return None
 
 
-# --------------------------------------------------------------------------- #
-# Crawl
-# --------------------------------------------------------------------------- #
-
 def crawl_listing(
     client: TikiClient, category_id: int, pages: int, crawled_at: str, limit: int = 40
 ) -> Iterator[dict]:
@@ -232,9 +193,6 @@ def crawl_listing(
         for item in items:
             item["_category_id"] = category_id
             item["_page"] = page
-            # Stamp ngay trong Bronze (khong chi luc ghi Silver) - can thiet
-            # de job Spark (chi doc Bronze, khong qua normalize_item() cua
-            # Python) cung co duoc crawled_at khi tao Silver.
             item["_crawled_at"] = crawled_at
             yield item
 
@@ -246,19 +204,7 @@ def crawl_detail(client: TikiClient, product_id: int, spid: int | None = None) -
     return client.get_json(DETAIL_URL.format(product_id=product_id), params)
 
 
-# --------------------------------------------------------------------------- #
-# Chuan hoa Bronze -> Silver
-# --------------------------------------------------------------------------- #
-
 def normalize_item(item: dict, crawled_at: str) -> dict:
-    """Chuan hoa 1 san pham tu listing (+ detail neu co --detail).
-
-    Luu y: API listing (/blocks/listings) KHONG tra ve brand duoi dang object,
-    seller_name, primary_category_name hay is_authentic - cac truong nay chi
-    co day du khi goi kem API detail (/api/v2/products/{id}), duoc gan vao
-    item["_detail"] boi crawl_detail(). Neu khong dung --detail, cac cot nay
-    se la None. Chi tiet schema: xem docs/tiki_api_schema.md.
-    """
     detail = item.get("_detail") or {}
     sold = item.get("quantity_sold")
     badges = item.get("badges_new") or []
@@ -296,10 +242,6 @@ def normalize_item(item: dict, crawled_at: str) -> dict:
     }
 
 
-# --------------------------------------------------------------------------- #
-# Ghi file
-# --------------------------------------------------------------------------- #
-
 def write_bronze(records: list[dict], out_dir: Path, dt: str, hour: str, category: str) -> Path:
     path = out_dir / "bronze" / f"dt={dt}" / f"hour={hour}" / f"category={category}"
     path.mkdir(parents=True, exist_ok=True)
@@ -311,12 +253,6 @@ def write_bronze(records: list[dict], out_dir: Path, dt: str, hour: str, categor
     return file_path
 
 
-# Ep kieu tuong minh cho tung cot Silver - khong de pandas tu suy luan.
-# Ly do: cot nao toan gia tri None (vd seller_name/primary_category_name
-# khi khong dung --detail) se bi pandas/parquet suy nham thanh kieu int,
-# gay xung dot kieu khi 1 file khac (co --detail, co gia tri string that)
-# duoc doc gop chung bang glob (DuckDB/Spark). Dung nullable dtype cua
-# pandas ("Int64", "string", "boolean") de an toan voi gia tri null.
 SILVER_SCHEMA: dict[str, str] = {
     "product_id": "Int64",
     "sku": "string",
@@ -357,10 +293,6 @@ def write_silver(rows: list[dict], out_dir: Path, dt: str, hour: str, category: 
     LOG.info("Silver -> %s (%d dong sau dedupe)", file_path, len(df))
     return file_path
 
-
-# --------------------------------------------------------------------------- #
-# Main
-# --------------------------------------------------------------------------- #
 
 def resolve_category(token: str) -> tuple[str, int]:
     token = token.strip()
@@ -436,9 +368,6 @@ def main(argv: list[str] | None = None) -> int:
         name, cat_id = resolve_category(token)
         LOG.info("=== Category %s (id=%d) ===", name, cat_id)
 
-        # Session rieng cho moi category (thay vi dung chung 1 session xuyen suot):
-        # tranh gui hang tram request lien tuc cung 1 trackity_id/session, kieu
-        # hanh vi de bi WAF cua Tiki nhan dien la bot va tra ve trang captcha.
         client = TikiClient(rps=args.rps, impersonate=args.impersonate)
 
         raw_items = list(crawl_listing(client, cat_id, args.pages, crawled_at))

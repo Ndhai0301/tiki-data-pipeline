@@ -1,24 +1,4 @@
 #!/usr/bin/env python3
-"""
-tiki_bronze_to_silver.py - Job Spark: Bronze (JSONL.gz, schema tuong minh)
--> Silver (Parquet, da ep kieu + khu trung lap).
-
-Idempotent theo --dt: dung partitionOverwriteMode=dynamic, moi lan chay
-CHI ghi de cac partition (dt/hour/category) thuoc dung --dt duoc xu ly,
-khong dong den cac ngay khac. Chay lai 2 lan cung --dt -> ket qua giong
-het nhau (khong nhan doi du lieu).
-
-Ghi ra data/silver/ - day la job San xuat Silver CHINH THUC trong pipeline
-Airflow (thay cho write_silver() cua tiki_crawl.py). tiki_crawl.py khi chay
-qua Airflow dung co --bronze-only, chi ghi Bronze; job nay doc Bronze do va
-tao Silver, khop dung 24 cot voi SILVER_SCHEMA (xem tiki_crawl.py) de
-stg_listings.sql doc duoc binh thuong.
-
-Chay:
-    export JAVA_HOME=~/spark/jdk-11.0.1 SPARK_HOME=~/spark/spark-3.5.8-bin-hadoop3
-    python3 spark/tiki_bronze_to_silver.py --dt 2026-08-22
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -56,8 +36,6 @@ def main(argv: list[str] | None = None) -> int:
         spark.stop()
         return 1
 
-    # Doc schema tuong minh khong tu nhan Hive partition nhu duckdb - phai
-    # tu suy dt/hour/category tu duong dan file dau vao.
     raw = (
         raw.withColumn("_input_file", F.input_file_name())
         .withColumn("dt", F.regexp_extract("_input_file", r"dt=([^/]+)", 1))

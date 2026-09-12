@@ -1,13 +1,3 @@
-"""
-Pytest cho spark/transform.py::bronze_to_silver bang du lieu gia lap
-(khong dung du lieu Tiki that) - test rieng ham bien doi, khong dong den
-Bronze/Silver that tren dia.
-
-Chay:
-    export JAVA_HOME=~/spark/jdk-11.0.1 SPARK_HOME=~/spark/spark-3.5.8-bin-hadoop3
-    pytest tests/ -v
-"""
-
 import sys
 from pathlib import Path
 
@@ -33,7 +23,6 @@ def spark():
 
 
 def _fake_row(**overrides) -> dict:
-    """1 dong Bronze gia lap, du field mac dinh de khong phai lap lai o moi test."""
     base = dict(
         id=1,
         sku="SKU-1",
@@ -73,8 +62,6 @@ def _fake_row(**overrides) -> dict:
 
 
 def _make_df(spark, rows: list[dict]):
-    # dt/hour/category khong nam trong LISTING_SCHEMA (o job chinh duoc suy
-    # tu duong dan file), nen ghep them 3 cot string vao schema khi test.
     from pyspark.sql import types as T
 
     partition_cols = ("dt", "hour", "category")
@@ -85,7 +72,6 @@ def _make_df(spark, rows: list[dict]):
 
 
 def test_list_price_fallback_to_original_price(spark):
-    """list_price=0 (dung o listing API that) -> phai lay original_price."""
     df = _make_df(spark, [_fake_row(list_price=0, original_price=999_000)])
     result = bronze_to_silver(df).collect()
     assert result[0]["list_price"] == 999_000
@@ -110,7 +96,6 @@ def test_is_authentic_false_khi_khong_co_badge(spark):
 
 
 def test_is_authentic_false_khi_badges_new_null(spark):
-    """badges_new=None (co the xay ra thuc te) khong duoc lam crash job."""
     df = _make_df(spark, [_fake_row(badges_new=None)])
     result = bronze_to_silver(df).collect()
     assert result[0]["is_authentic"] is False
@@ -124,10 +109,9 @@ def test_url_duoc_ghep_dung(spark):
 
 
 def test_dedupe_trung_product_id_cung_grain(spark):
-    """2 dong cung product_id + cung (dt, hour, category) -> chi con 1 dong."""
     rows = [
         _fake_row(id=1, price=100_000),
-        _fake_row(id=1, price=100_000),  # trung hoan toan, vd doc lai do retry
+        _fake_row(id=1, price=100_000),
     ]
     df = _make_df(spark, rows)
     result = bronze_to_silver(df).collect()
@@ -135,7 +119,6 @@ def test_dedupe_trung_product_id_cung_grain(spark):
 
 
 def test_khong_dedupe_khac_grain(spark):
-    """Cung product_id nhung khac hour (2 lan crawl khac nhau) -> giu ca 2."""
     rows = [
         _fake_row(id=1, hour="06"),
         _fake_row(id=1, hour="12"),
@@ -146,7 +129,6 @@ def test_khong_dedupe_khac_grain(spark):
 
 
 def test_cac_cot_suy_tu_field_noi_bo(spark):
-    """category_id/page/crawled_at phai lay dung tu _category_id/_page/_crawled_at."""
     df = _make_df(spark, [_fake_row(_category_id=1846, _page=3, _crawled_at="2026-08-22T06:00:02+00:00")])
     result = bronze_to_silver(df).collect()
     assert result[0]["category_id"] == 1846
@@ -155,7 +137,6 @@ def test_cac_cot_suy_tu_field_noi_bo(spark):
 
 
 def test_brand_id_seller_name_luon_null(spark):
-    """listing API khong co brand.id/seller_name (chi co o detail API) -> luon None."""
     df = _make_df(spark, [_fake_row()])
     result = bronze_to_silver(df).collect()
     assert result[0]["brand_id"] is None

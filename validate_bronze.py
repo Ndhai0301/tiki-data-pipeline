@@ -1,23 +1,4 @@
 #!/usr/bin/env python3
-"""
-validate_bronze.py - Chan du lieu rac NGAY DAU luong, truoc khi no troi
-xuong Spark/Postgres/dbt roi moi phat hien (ton ca pipeline chay vo ich).
-
-Kiem tra 2 dieu kien don gian nhung du de bat cac loi da tung gap that
-trong du an nay:
-  1. Tong so ban ghi Bronze duoi nguong --min-rows -> nghi bi chan/captcha
-     hang loat (dung xay ra o snap_20260822_00, 13/29 category bi chan).
-  2. Co category nao ma so ban ghi = 0 vuot qua --max-empty-categories ->
-     nghi WAF chan tung phan, khong phai loi mang thoang qua.
-
-Exit code != 0 -> Airflow danh dau task FAIL -> DAG dung lai, khong chay
-tiep spark_to_silver/load_postgres voi du lieu thieu.
-
-Chay:
-    python3 validate_bronze.py --dt 2026-08-25 --hour 00
-    python3 validate_bronze.py --dt 2026-08-25 --hour 00 --min-rows 5000
-"""
-
 from __future__ import annotations
 
 import argparse

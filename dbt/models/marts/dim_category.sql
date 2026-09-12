@@ -1,6 +1,5 @@
 {{ config(materialized='table') }}
 
--- Snowflake dim tach tu stg_listings (xem docs/erd.md).
 with category as (
     select distinct on (category_id)
         category_id,

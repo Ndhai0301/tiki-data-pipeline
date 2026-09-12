@@ -1,26 +1,3 @@
-"""
-tiki_daily - Pipeline chinh thuc, thay hoan toan cron truoc day.
-
-crawl_tiki -> validate_bronze -> spark_to_silver -> load_postgres
-    -> dbt_snapshot -> dbt_run -> dbt_test -> refresh_dashboard
-
-3 nguyen tac bat buoc (xem docs/storage.md va cuoc trao doi ve idempotent):
-
-1. Idempotent theo {{ ds }}: crawl_tiki nhan --dt {{ ds }} --hour 12
-   (lich chay 12h trua, xem schedule ben duoi), ghi vao dung partition
-   dt=/hour=12 - chay lai DAG cho cung ngay se GHI DE dung partition do
-   (khong nhan doi), KHONG phai chay lai se ra gia tri
-   Y HET nhu lan truoc (Tiki tra ve gia HIEN TAI, co the da doi giua 2
-   lan retry - day la gioi han that cua nguon du lieu, khong phai bug).
-
-2. catchup=False: khong the crawl lai gia CUA QUA KHU (Tiki chi co API
-   tra gia hien tai). Neu DAG bi tat vai ngay roi bat lai, KHONG duoc tu
-   dong chay bu cac ngay da bo lo - se tao du lieu SAI (gia "hom qua"
-   thuc chat la gia luc chay bu, gan nham cho ngay cu).
-
-3. Fail nhanh dung cho: validate_bronze chan ngay sau crawl_tiki, truoc
-   khi Spark/Postgres/dbt kip chay voi du lieu rac.
-"""
 
 from __future__ import annotations
 
@@ -44,8 +21,6 @@ default_args = {
 
 
 def alert_callback(context):
-    """SLA/loi callback - hien chi LOG, chua noi Discord/email that (xem
-    ghi chu trong cuoc trao doi luc tao DAG nay - de sau khi co webhook)."""
     ti = context["task_instance"]
     logging.getLogger("airflow.task").error(
         "[tiki_daily] Task THAT BAI: dag=%s task=%s run=%s try=%s log_url=%s",
@@ -54,10 +29,6 @@ def alert_callback(context):
 
 
 def refresh_dashboard_callable(**context):
-    """Best-effort: goi API Metabase de sync lai schema Postgres, de
-    dashboard (khi da dung) thay cot moi ngay khi Gold doi. Metabase CHUA
-    duoc cau hinh dashboard/auth that (viec con lai, chua lam) - task nay
-    KHONG lam DAG fail neu Metabase chua san sang, chi log ro trang thai."""
     import requests
 
     try:
@@ -77,12 +48,6 @@ with DAG(
     schedule="0 12 * * *",
     start_date=pendulum.datetime(2026, 8, 24, tz="Asia/Bangkok"),
     catchup=False,
-    # dbt (dbt_snapshot/dbt_run/dbt_test) ghi vao 1 schema Postgres CHUNG
-    # (gold/staging), khong partition rieng theo run nhu Bronze/Silver -
-    # 2 DAG run chay dbt CUNG LUC se dam vao nhau luc dbt rename bang tam
-    # (loi that da gap: "relation dim_date__dbt_backup already exists").
-    # max_active_runs=1: cac DAG run xep hang chay tuan tu, khong bao gio
-    # 2 run cung dbt vao Postgres 1 luc.
     max_active_runs=1,
     default_args=default_args,
     on_failure_callback=alert_callback,
@@ -122,13 +87,17 @@ with DAG(
         bash_command=f"cd {REPO} && python3 load_silver_to_postgres.py --data-dir {DATA_DIR} --verbose",
     )
 
+    compact_silver = BashOperator(
+        task_id="compact_silver",
+        bash_command=(
+            f"cd {REPO} && python3 compact.py "
+            "--month {{ ds[:7] }} "
+            f"--data-dir {DATA_DIR}"
+        ),
+    )
+
     dbt_snapshot = BashOperator(
         task_id="dbt_snapshot",
-        # dim_product_snapshot.sql doc tu staging.stg_listings, nhung
-        # load_postgres vua DROP TABLE ... CASCADE xoa luon view do (xem
-        # load_silver_to_postgres.py) - phai "dbt run --select staging"
-        # dung lai view truoc khi snapshot doc duoc, neu khong se loi
-        # "relation staging.stg_listings does not exist".
         bash_command=f"cd {REPO}/dbt && dbt run --select staging --profiles-dir . && dbt snapshot --profiles-dir .",
     )
 
@@ -147,5 +116,5 @@ with DAG(
         python_callable=refresh_dashboard_callable,
     )
 
-    crawl_tiki >> validate_bronze >> spark_to_silver >> load_postgres
+    crawl_tiki >> validate_bronze >> spark_to_silver >> [load_postgres, compact_silver]
     load_postgres >> dbt_snapshot >> dbt_run >> dbt_test >> refresh_dashboard

@@ -52,6 +52,19 @@ services:
   airflow-init:
     build: ./airflow
     container_name: tiki_airflow_init
+    # Chay cung UID voi host user (1000, "hai") thay vi UID mac dinh cua
+    # image (50000, "airflow"). ./dags va . deu la bind-mount tu host -
+    # khac UID gay loi Permission denied lien tuc moi khi 1 ben ghi file
+    # (container ghi Bronze/Silver/dbt/target, hoac host chay dbt/test
+    # tay) roi ben kia doc/ghi lai (da gap 3 lan that, xem lich su commit).
+    # Cung UID: khong con phan biet "chu file" (owner check chi can UID
+    # trung), ca 2 phia deu doc/ghi tu do, khong can chmod lai nua.
+    #
+    # GID PHAI la 0 (khong phai 1000 cua host) - image Airflow chinh thuc
+    # bat buoc GID=0 de ho tro chay voi UID tuy y (bao loi ngay neu dat
+    # GID khac 0, da gap khi thu 1000:1000). Khong anh huong muc tieu tren
+    # vi UID trung la du de duoc quyen "owner".
+    user: "1000:0"
     depends_on:
       airflow-postgres:
         condition: service_healthy
@@ -75,6 +88,7 @@ services:
     build: ./airflow
     container_name: tiki_airflow_webserver
     restart: unless-stopped
+    user: "1000:0"
     depends_on:
       airflow-init:
         condition: service_completed_successfully
@@ -88,6 +102,7 @@ services:
     build: ./airflow
     container_name: tiki_airflow_scheduler
     restart: unless-stopped
+    user: "1000:0"
     depends_on:
       airflow-init:
         condition: service_completed_successfully

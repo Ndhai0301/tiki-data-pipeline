@@ -1,14 +1,5 @@
 {{ config(materialized='table') }}
 
--- SCD2 (xem docs/erd.md). Nguon la dbt snapshot dim_product_snapshot
--- (snapshots/dim_product_snapshot.sql) - dbt tu sinh dbt_valid_from/
--- dbt_valid_to/dbt_scd_id, dung lam valid_from/valid_to/product_key thay
--- vi tu code UPSERT tay.
---
--- product_key hash tu dbt_scd_id (khong phai product_id): moi PHIEN BAN
--- (moi lan brand/seller/category/ten doi) can 1 key rieng, de
--- fact_price_daily/fact_price_change join dung dong lich su tai thoi
--- diem phat sinh gia, khong bi gop nham vao dong hien tai.
 with snap as (
     select * from {{ ref('dim_product_snapshot') }}
 )

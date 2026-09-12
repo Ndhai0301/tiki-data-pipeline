@@ -1,22 +1,4 @@
 #!/usr/bin/env python3
-"""
-compact.py - Gop cac file Silver Parquet nho (theo dt=/hour=/category=)
-thanh 1 file lon/category/thang, giai quyet van de "file nho" khi Spark/
-DuckDB phai mo hang nghin file de doc metadata.
-
-Khong dong den Bronze (bat bien theo thiet ke - xem docs/storage.md) va
-khong sua/xoa file Silver goc - chi doc va ghi ra data/silver_compacted/,
-an toan de chay lai nhieu lan (idempotent, ghi de dung file thang do).
-
-Voi volume hien tai (~1.5 GB/thang) chua thuc su can, nhung viet san de
-chay dinh ky (VD dau moi thang, qua DAG/cron) truoc khi so luong file tro
-thanh van de that.
-
-Chay:
-    python3 compact.py --month 2026-08
-    python3 compact.py --month 2026-08 --data-dir ./data --dry-run
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -30,8 +12,7 @@ LOG = logging.getLogger("compact")
 
 
 def find_month_files(data_dir: Path, month: str) -> dict[str, list[str]]:
-    """Tra ve {category: [duong dan file parquet]} cho 1 thang, gom tu moi dt/hour."""
-    pattern = str(data_dir / "silver" / f"dt={month}-*" / "hour=*" / "category=*" / "products.parquet")
+    pattern = str(data_dir / "silver" / f"dt={month}-*" / "hour=*" / "category=*" / "*.parquet")
     files = glob.glob(pattern)
 
     by_category: dict[str, list[str]] = {}
