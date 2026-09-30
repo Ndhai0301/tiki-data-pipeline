@@ -23,6 +23,7 @@ def main(argv: list[str] | None = None) -> int:
         SparkSession.builder
         .appName("tiki_bronze_to_silver")
         .config("spark.sql.sources.partitionOverwriteMode", "dynamic")
+        .config("spark.driver.memory", "2g")
         .getOrCreate()
     )
     spark.sparkContext.setLogLevel("WARN")

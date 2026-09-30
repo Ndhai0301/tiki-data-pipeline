@@ -6,11 +6,11 @@ Primary goal: record the price of ~20,000 products every day to analyze price tr
 
 ## Highlights
 
-- **258,989** daily price observations and **16,549** real price-change events tracked across **22,034** products in 29 categories (21 days of continuous crawling, still growing daily)
+- **157,828** daily price observations and **7,301** real price-change events tracked across **23,421** products in 29 categories, spanning **7 verified-correct crawl days** as of 2026-09-25 (see "Date label bug" below — a relabeling pass on 2026-09-25 removed several days that were mislabeled or duplicated)
 - Full **ELT pipeline** built from scratch: custom crawler (bypasses WAF via TLS fingerprint impersonation) → PySpark → DuckDB → dbt star schema, orchestrated by Airflow
 - **SCD Type 2** dimension modeling (`dim_product`) to preserve full history of attribute changes, not just overwrite them
 - **32 automated dbt tests** + a pytest suite for the transform layer — data quality is verified on every run, not eyeballed
-- Diagnosed and fixed several real production incidents along the way (race conditions, host/container UID permission conflicts, SCD noise from unstable source fields) — see [docs/](docs/) for the design decisions behind them
+- Diagnosed and fixed several real production incidents along the way (a scheduler that silently stopped after the host slept, a manual-trigger date-labeling trap, host/container UID permission conflicts, Docker bind mounts from WSL silently turning into empty directories, and a partition-labeling bug that mislabeled which day a price was actually observed on) — see [docs/](docs/) and the Operations notes below for the design decisions behind them
 
 ---
 
@@ -100,6 +100,8 @@ cd ~/tiki-crawl
 docker compose up -d
 ```
 
+> **Run `docker compose` from the Ubuntu (WSL) terminal, never from Windows PowerShell / a Windows-side VS Code terminal.** From Windows, the bind-mount source becomes the UNC path `\\wsl.localhost\Ubuntu\...`, which Docker Desktop cannot mount — it silently mounts an empty directory instead, and Airflow shows 0 DAGs. See [Troubleshooting](#troubleshooting).
+
 Check that all 5 containers are `Up`:
 ```bash
 docker ps --format "table {{.Names}}\t{{.Status}}" | grep tiki
@@ -139,9 +141,9 @@ docker compose down -v     # CAUTION: also deletes volumes (loses Postgres/Metab
 
 | Task | What it does |
 |---|---|
-| `crawl_tiki` | `tiki_crawl.py --categories all --pages 20 --dt {{ ds }} --hour 12 --bronze-only` |
-| `validate_bronze` | Fail if Bronze has < 5000 rows or > 3 empty categories |
-| `spark_to_silver` | Spark job: Bronze → Silver Parquet |
+| `crawl_tiki` | `tiki_crawl.py --categories all --pages 20 --hour 12` — crawler picks its own `dt` from its local clock and prints it as the last stdout line |
+| `validate_bronze` | Fail if Bronze has < 5000 rows or > 3 empty categories. Reads `dt` via `{{ ti.xcom_pull(task_ids='crawl_tiki') }}` |
+| `spark_to_silver` | Spark job: Bronze → Silver Parquet. Reads `dt` the same way |
 | `load_postgres` | DuckDB: Silver → `raw.listings` (full refresh, `DROP TABLE ... CASCADE`) |
 | `compact_silver` | Merge the current month's small Silver files (runs in parallel with `load_postgres`) |
 | `dbt_snapshot` | `dbt run --select staging && dbt snapshot` (rebuilds the staging view first, since `load_postgres` just dropped it via CASCADE) |
@@ -177,7 +179,38 @@ Star schema — see [docs/erd.md](docs/erd.md) for details.
 - **The machine must be on (WSL + Docker running) around 12:00 noon each day.** If it sleeps/shuts down at that moment, that day is skipped and is not backfilled (by design). A clean run takes ~6-7 minutes; allow a ~15-20 minute buffer.
 - **The host cron job is DISABLED** — Airflow is the sole data source. Do not re-enable a parallel cron (it would overwrite Airflow's output).
 - **Airflow containers run as `user: "1000:0"`** (matching the host user's UID) — prevents permission conflicts when both the host and the container write into the bind-mounted directories (`data/`, `dbt/`).
-- **Date label is off by one day**: Airflow sets `ds` to the start of the interval, so data crawled today at noon is written to the `dt=<yesterday>` partition. This is normal Airflow behavior, not a bug.
+- **Date label bug, fixed 2026-09-25**: `crawl_tiki` used to take `--dt {{ ds }}` from Airflow's logical date. That's correct for a source that reports history for a fixed interval, but Tiki's API only ever returns the *current* price — so a scheduled run firing today at noon (`ds` = yesterday, by Airflow's own interval convention) was writing today's real price into `dt=<yesterday>`'s partition. Consequences: `date_key` in both fact tables was off by a day, cron-era and Airflow-era partitions used different clocks (a seam in the history), and a manual trigger (`ds` = the trigger date itself, not the interval start) could collide with the next scheduled run on the same partition. Fixed by having the crawler label partitions with its own local clock and pass that date to downstream tasks via XCom (`{{ ti.xcom_pull(task_ids='crawl_tiki') }}`) instead of `{{ ds }}`. Partitions written before the fix are being relabeled — see `docs/` for the migration.
 - **`dim_brand` is empty**: the Tiki listing API does not return `brand_id` (only the detail API does). To analyze by brand, `tiki_crawl.py` would need to also call the detail API — the tradeoff is a much slower crawl.
+- **Bind mounts go stale when WSL restarts (found 2026-09-30)**: if the Ubuntu distro restarts while the containers keep running (host sleep/hibernate, `wsl --shutdown`, WSL idle shutdown), the containers lose the real `./dags` and `.` mounts and see empty directories instead, even though the mount config still points at the correct Linux path. Airflow then shows 0 DAGs, and the noon run is silently skipped. After the host wakes from sleep or reboots, check the UI (or `airflow dags list`) before noon.
+
+---
+
+## Troubleshooting
+
+### Airflow UI shows 0 DAGs
+
+1. Check what the container actually sees:
+   ```bash
+   docker exec tiki_airflow_scheduler ls /opt/airflow/dags
+   docker inspect tiki_airflow_scheduler --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{println}}{{end}}'
+   ```
+2. **Mount source is `\\wsl.localhost\...`** → the stack was started from Windows. Recreate it from the Ubuntu terminal (volumes are kept):
+   ```bash
+   cd ~/tiki-crawl && docker compose up -d --force-recreate
+   ```
+3. **Mount source is `/home/hai301/tiki-crawl/dags` but the folder is empty** → stale mount after a WSL restart. Restart the Airflow containers:
+   ```bash
+   cd ~/tiki-crawl && docker compose restart airflow-scheduler airflow-webserver
+   ```
+4. If files are visible but the DAG still isn't listed, check for parse errors and force a re-parse:
+   ```bash
+   docker exec tiki_airflow_scheduler airflow dags list-import-errors
+   docker exec tiki_airflow_scheduler airflow dags reserialize
+   ```
+5. If the mount was broken around noon, that day's run was skipped — trigger it manually (see above).
+
+### Docker Desktop: `Wsl/Service/CreateInstance/0x800705b4` (timeout)
+
+The WSL VM is in a bad state (common after sleep or a WSL auto-update). Quit Docker Desktop, run `wsl --shutdown` in PowerShell, wait ~10 s, then start Docker Desktop again. If it still times out, reboot Windows.
 
 ---

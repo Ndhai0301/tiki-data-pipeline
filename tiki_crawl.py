@@ -15,8 +15,6 @@ from pathlib import Path
 from typing import Any, Iterator
 from zoneinfo import ZoneInfo
 
-import pandas as pd
-
 try:
     from curl_cffi import requests as curl_requests
 except ImportError as exc:  # pragma: no cover
@@ -27,7 +25,6 @@ LISTING_URLS = [
     f"{BASE}/api/personalish/v1/blocks/listings",
     f"{BASE}/api/v2/products",
 ]
-DETAIL_URL = f"{BASE}/api/v2/products/{{product_id}}"
 
 CATEGORY_ALIASES: dict[str, int] = {
     "laptop": 1846,
@@ -84,7 +81,7 @@ BROWSER_HEADERS = {
 RETRY_STATUS = {429, 500, 502, 503, 504}
 LOG = logging.getLogger("tiki")
 
-LOCAL_TZ = ZoneInfo("Asia/Bangkok")
+LOCAL_TZ = ZoneInfo("Asia/Ho_Chi_Minh")
 
 
 class RateLimiter:
@@ -197,51 +194,6 @@ def crawl_listing(
             yield item
 
 
-def crawl_detail(client: TikiClient, product_id: int, spid: int | None = None) -> dict | None:
-    params: dict[str, Any] = {"platform": "web"}
-    if spid:
-        params["spid"] = spid
-    return client.get_json(DETAIL_URL.format(product_id=product_id), params)
-
-
-def normalize_item(item: dict, crawled_at: str) -> dict:
-    detail = item.get("_detail") or {}
-    sold = item.get("quantity_sold")
-    badges = item.get("badges_new") or []
-    url_key, pid = item.get("url_key"), item.get("id")
-
-    brand = detail.get("brand") if isinstance(detail.get("brand"), dict) else None
-    current_seller = detail.get("current_seller") if isinstance(detail.get("current_seller"), dict) else None
-    category = detail.get("categories") if isinstance(detail.get("categories"), dict) else None
-
-    return {
-        "product_id": pid,
-        "sku": item.get("sku"),
-        "name": item.get("name"),
-        "url_key": url_key,
-        "url": f"{BASE}/{url_key}-p{pid}.html" if url_key else None,
-        "price": item.get("price"),
-        "list_price": item.get("list_price") or item.get("original_price") or 0,
-        "discount": item.get("discount"),
-        "discount_rate": item.get("discount_rate"),
-        "rating_average": item.get("rating_average"),
-        "review_count": item.get("review_count"),
-        "quantity_sold": sold.get("value") if isinstance(sold, dict) else sold,
-        "brand_id": brand.get("id") if brand else None,
-        "brand_name": brand.get("name") if brand else item.get("brand_name"),
-        "seller_id": item.get("seller_id") or (current_seller.get("id") if current_seller else None),
-        "seller_name": current_seller.get("name") if current_seller else None,
-        "category_id": item.get("_category_id"),
-        "primary_category_name": category.get("name") if category else None,
-        "inventory_status": item.get("inventory_status"),
-        "is_authentic": any(b.get("code") == "authentic_brand" for b in badges),
-        "thumbnail_url": item.get("thumbnail_url"),
-        "badge_count": len(badges),
-        "page": item.get("_page"),
-        "crawled_at": crawled_at,
-    }
-
-
 def write_bronze(records: list[dict], out_dir: Path, dt: str, hour: str, category: str) -> Path:
     path = out_dir / "bronze" / f"dt={dt}" / f"hour={hour}" / f"category={category}"
     path.mkdir(parents=True, exist_ok=True)
@@ -250,47 +202,6 @@ def write_bronze(records: list[dict], out_dir: Path, dt: str, hour: str, categor
         for rec in records:
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     LOG.info("Bronze -> %s (%d ban ghi)", file_path, len(records))
-    return file_path
-
-
-SILVER_SCHEMA: dict[str, str] = {
-    "product_id": "Int64",
-    "sku": "string",
-    "name": "string",
-    "url_key": "string",
-    "url": "string",
-    "price": "Int64",
-    "list_price": "Int64",
-    "discount": "Int64",
-    "discount_rate": "Int64",
-    "rating_average": "Float64",
-    "review_count": "Int64",
-    "quantity_sold": "Int64",
-    "brand_id": "Int64",
-    "brand_name": "string",
-    "seller_id": "Int64",
-    "seller_name": "string",
-    "category_id": "Int64",
-    "primary_category_name": "string",
-    "inventory_status": "string",
-    "is_authentic": "boolean",
-    "thumbnail_url": "string",
-    "badge_count": "Int64",
-    "page": "Int64",
-    "crawled_at": "string",
-}
-
-
-def write_silver(rows: list[dict], out_dir: Path, dt: str, hour: str, category: str) -> Path | None:
-    if not rows:
-        return None
-    path = out_dir / "silver" / f"dt={dt}" / f"hour={hour}" / f"category={category}"
-    path.mkdir(parents=True, exist_ok=True)
-    file_path = path / "products.parquet"
-    df = pd.DataFrame(rows).drop_duplicates(subset=["product_id"], keep="first")
-    df = df.astype(SILVER_SCHEMA)
-    df.to_parquet(file_path, index=False, compression="snappy")
-    LOG.info("Silver -> %s (%d dong sau dedupe)", file_path, len(df))
     return file_path
 
 
@@ -307,7 +218,7 @@ def resolve_category(token: str) -> tuple[str, int]:
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Crawl san pham Tiki -> Bronze/Silver")
+    p = argparse.ArgumentParser(description="Crawl san pham Tiki -> Bronze")
     p.add_argument(
         "--categories",
         default="laptop",
@@ -317,27 +228,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--pages", type=int, default=3, help="So trang moi category (40 sp/trang)")
     p.add_argument("--rps", type=float, default=1.0, help="Request toi da moi giay")
     p.add_argument("--out", default="./data", help="Thu muc output")
-    p.add_argument("--detail", action="store_true", help="Goi them API chi tiet san pham")
-    p.add_argument("--detail-limit", type=int, default=50)
     p.add_argument(
         "--impersonate",
         default="chrome",
         help="Profile TLS cua curl_cffi (chrome, chrome131, chrome124...)",
     )
     p.add_argument(
-        "--dt",
+        "--hour",
         default=None,
-        help="Ghi de partition dt= (YYYY-MM-DD) thay vi tu tinh theo gio hien tai. "
-        "Dung khi goi tu Airflow voi {{ ds }} - LUU Y: day la nhan (label) cho "
-        "partition, KHONG phai crawl lai gia CU cua ngay do - Tiki chi tra ve gia "
-        "HIEN TAI. Mac dinh hour=00 khi dung --dt (trừ khi co --hour rieng).",
-    )
-    p.add_argument("--hour", default=None, help="Ghi de partition hour= (HH). Mac dinh: 00 neu co --dt, khong thi tu gio he thong.")
-    p.add_argument(
-        "--bronze-only",
-        action="store_true",
-        help="Chi ghi Bronze, bo qua write_silver() (dung khi Silver se duoc "
-        "job Spark rieng tao, vd trong Airflow DAG).",
+        help="Ghi de partition hour= (HH). Mac dinh: gio he thong (Asia/Ho_Chi_Minh).",
     )
     p.add_argument("--verbose", action="store_true")
     return p.parse_args(argv)
@@ -355,8 +254,8 @@ def main(argv: list[str] | None = None) -> int:
     out_dir = Path(args.out).expanduser().resolve()
     now_utc = datetime.now(timezone.utc)
     now_local = now_utc.astimezone(LOCAL_TZ)
-    dt = args.dt or now_local.strftime("%Y-%m-%d")
-    hour = args.hour or ("00" if args.dt else now_local.strftime("%H"))
+    dt = now_local.strftime("%Y-%m-%d")
+    hour = args.hour or now_local.strftime("%H")
     crawled_at = now_utc.isoformat(timespec="seconds")
     total = 0
 
@@ -375,21 +274,20 @@ def main(argv: list[str] | None = None) -> int:
             LOG.warning("Category %s khong lay duoc gi", name)
             continue
 
-        if args.detail:
-            for item in raw_items[: args.detail_limit]:
-                detail = crawl_detail(client, item["id"], item.get("seller_product_id"))
-                if detail:
-                    item["_detail"] = detail
-            LOG.info("Da lay detail cho %d san pham", min(len(raw_items), args.detail_limit))
-
         write_bronze(raw_items, out_dir, dt, hour, name)
-        if not args.bronze_only:
-            rows = [normalize_item(it, crawled_at) for it in raw_items]
-            write_silver(rows, out_dir, dt, hour, name)
         total += len(raw_items)
 
     LOG.info("Xong. Tong %d san pham. Output: %s", total, out_dir)
-    return 0 if total else 1
+    if total == 0:
+        return 1
+    # Dong stdout cuoi cung, KHONG duoc log gi sau dong nay: BashOperator
+    # cua Airflow day dong cuoi cua stdout vao XCom, downstream task doc lai
+    # bang {{ ti.xcom_pull(task_ids='crawl_tiki') }} de biet dung dt nao -
+    # crawler tu quyet dinh dt theo gio dia phuong cua chinh no, khong nhan
+    # tu Airflow (Airflow chi biet "chay luc nao", khong biet "gia nay la
+    # cua ngay nao" - Tiki chi tra ve gia HIEN TAI, khong co gia lich su).
+    print(dt)
+    return 0
 
 
 if __name__ == "__main__":

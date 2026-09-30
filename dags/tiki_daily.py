@@ -46,7 +46,7 @@ with DAG(
     dag_id="tiki_daily",
     description="Crawl Tiki -> validate -> Spark Silver -> Postgres -> dbt -> dashboard",
     schedule="0 12 * * *",
-    start_date=pendulum.datetime(2026, 8, 24, tz="Asia/Bangkok"),
+    start_date=pendulum.datetime(2026, 8, 24, tz="Asia/Ho_Chi_Minh"),
     catchup=False,
     max_active_runs=1,
     default_args=default_args,
@@ -54,12 +54,22 @@ with DAG(
     tags=["tiki"],
 ) as dag:
 
+    # crawl_tiki tu quyet dinh dt theo gio dia phuong cua chinh no (khong
+    # nhan --dt tu Airflow nua) va in dt do ra dong stdout cuoi cung.
+    # BashOperator day dong cuoi stdout vao XCom, cac task sau doc lai bang
+    # xcom_pull thay vi dung {{ ds }} - vi {{ ds }} la logical date cua DAG
+    # run (dung cho nguon du lieu dang "transaction theo ky"), con Tiki chi
+    # tra ve gia HIEN TAI nen nhan partition phai theo dong ho cua lan crawl
+    # thuc te, khong theo lich cua Airflow (xem docs/ hoac README muc
+    # "Date label").
+    CRAWL_DT = "{{ ti.xcom_pull(task_ids='crawl_tiki') }}"
+
     crawl_tiki = BashOperator(
         task_id="crawl_tiki",
         bash_command=(
             f"cd {REPO} && python3 tiki_crawl.py "
             "--categories all --pages 20 --rps 1.0 "
-            "--dt {{ ds }} --hour 12 --bronze-only "
+            "--hour 12 "
             f"--out {DATA_DIR}"
         ),
     )
@@ -68,7 +78,7 @@ with DAG(
         task_id="validate_bronze",
         bash_command=(
             f"cd {REPO} && python3 validate_bronze.py "
-            "--dt {{ ds }} --hour 12 "
+            f"--dt {CRAWL_DT} --hour 12 "
             f"--data-dir {DATA_DIR} --min-rows 5000"
         ),
     )
@@ -77,7 +87,7 @@ with DAG(
         task_id="spark_to_silver",
         bash_command=(
             f"cd {REPO} && python3 spark/tiki_bronze_to_silver.py "
-            "--dt {{ ds }} "
+            f"--dt {CRAWL_DT} "
             f"--data-dir {DATA_DIR}"
         ),
     )
@@ -91,7 +101,7 @@ with DAG(
         task_id="compact_silver",
         bash_command=(
             f"cd {REPO} && python3 compact.py "
-            "--month {{ ds[:7] }} "
+            "--month {{ ti.xcom_pull(task_ids='crawl_tiki')[:7] }} "
             f"--data-dir {DATA_DIR}"
         ),
     )

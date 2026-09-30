@@ -72,8 +72,8 @@ services:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
-      AIRFLOW__CORE__DEFAULT_TIMEZONE: Asia/Bangkok
-      AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE: Asia/Bangkok
+      AIRFLOW__CORE__DEFAULT_TIMEZONE: Asia/Ho_Chi_Minh
+      AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE: Asia/Ho_Chi_Minh
       PG_DSN: "host=postgres port=5432 dbname=tiki user=tiki password=tiki"
       DBT_PG_HOST: postgres
       DBT_PG_PORT: "5432"
